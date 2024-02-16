@@ -1,0 +1,17 @@
+@startuml
+start
+:Recibir datos del formulario;
+if (¿Datos válidos?) then (sí)
+    :Buscar visitante por ID;
+    if (¿Visitante existe?) then (sí)
+        :Preparar datos de visita;
+        :Guardar visita en DB;
+        -[#green]-> [Registro exitoso] :Mostrar mensaje de éxito;
+    else (no)
+        -[#red]-> [Registro fallido] :Mostrar mensaje de error;
+    endif
+else (no)
+    -[#red]-> [Datos inválidos] :Mostrar mensaje de error;
+endif
+stop
+@enduml

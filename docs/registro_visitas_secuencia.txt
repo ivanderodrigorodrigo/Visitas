@@ -1,0 +1,18 @@
+@startuml
+actor Usuario as user
+participant "Interfaz Web" as web
+participant "Controlador de Visitas" as controller
+database DB
+
+user -> web : Ingresa datos de visita
+web -> controller : solicitaRegistro(visitaData)
+controller -> DB : buscaVisitante(visitaData.visitanteId)
+DB -> controller : visitante
+alt visitante encontrado
+    controller -> DB : guardaVisita(visitaData)
+    DB -> controller : confirmación
+    controller -> web : muestraMensaje("Visita registrada con éxito")
+else visitante no encontrado
+    controller -> web : muestraMensaje("Visitante no encontrado")
+end
+@enduml
