@@ -1,42 +1,43 @@
 <?php
+
+require_once './src/models/EmpleadoModel.php';
+
 class EmpleadoController {
+    
+    private $emp;
 
-    public function agregarEmpleado($nombre, $email, $departamentoId) {
-        // Aquí iría la lógica para agregar un nuevo empleado a la base de datos
-        echo "Empleado agregado: " . $nombre . " en el departamento ID: " . $departamentoId . "\n";
+    public function __construct(){
+        $this->emp = new EmpleadoModel();
     }
 
-    public function listarEmpleados() {
-        // Aquí iría la lógica para obtener una lista de todos los empleados de la base de datos
-        // Esta es una simulación de datos
-        return [
-            ['id' => 1, 'nombre' => 'Juan Perez', 'email' => 'juan.perez@example.com', 'departamentoId' => 1],
-            ['id' => 2, 'nombre' => 'Ana Lopez', 'email' => 'ana.lopez@example.com', 'departamentoId' => 2]
-        ];
+    public function mostrarEmpleados(){
+        $empleados = $this->emp->get_empleados();
+        require_once("./src/views/EmpleadosView.php");
     }
 
-    public function actualizarEmpleado($id, $nombre, $email, $departamentoId) {
-        // Aquí iría la lógica para actualizar la información de un empleado en la base de datos
-        echo "Empleado actualizado: " . $nombre . " con ID: " . $id . "\n";
+    public function mostrarEmpleado($id_emp){
+        $empleado = $this->emp->get_empleado($id_emp);
+        require_once("./src/views/EmpleadosView.php");
     }
 
-    public function eliminarEmpleado($id) {
-        // Aquí iría la lógica para eliminar un empleado de la base de datos
-        echo "Empleado eliminado con ID: " . $id . "\n";
+    public function insertarEmpleado($dni_emp, $nombre_emp, $apellido_emp, $email_emp, $contrasenya_emp, $rol_id, $activo_emp){
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->emp->insertar($dni_emp, $nombre_emp, $apellido_emp, $email_emp, $contrasenya_emp, $rol_id, $activo_emp);
+            $this->mostrarEmpleados();
+        }
+    }
+
+    public function modificarEmpleado($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $contrasenya_emp, $rol_id, $activo_emp){
+        $this->emp->modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $contrasenya_emp, $rol_id, $activo_emp);
+        $this->mostrarEmpleados();
+    }
+
+    public function eliminarEmpleado($id_emp){
+        $this->emp->eliminar($id_emp);
+        $this->mostrarEmpleados();
     }
 }
 
-$empleadoController = new EmpleadoController();
 
-// Agregar un nuevo empleado
-$empleadoController->agregarEmpleado('Laura García', 'laura.garcia@example.com', 3);
-
-// Listar todos los empleados
-$empleados = $empleadoController->listarEmpleados();
-print_r($empleados);
-
-// Actualizar la información de un empleado
-$empleadoController->actualizarEmpleado(1, 'Juan Pérez', 'juan.perez@example.com', 1);
-
-// Eliminar un empleado
-$empleadoController->eliminarEmpleado(2);
+?>

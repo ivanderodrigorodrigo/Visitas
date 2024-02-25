@@ -19,12 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($email == "usuario@example.com" && $password == "contraseña123") {
         // Autenticación exitosa
         $_SESSION['user'] = $email; // Guardar alguna información en la sesión
-        header('Location: /views/dashboard.php'); // Redirigir al dashboard
+        header('Location: ../views/dashboard.php'); // Redirigir al dashboard
         exit();
     } else {
         // Autenticación fallida
         $_SESSION['error'] = 'Credenciales inválidas';
-        header('Location: /public/login.php'); // Redirigir de nuevo al formulario de inicio de sesión
+        header('Location: ../views/login.php'); // Redirigir de nuevo al formulario de inicio de sesión
         exit();
     }
 }
