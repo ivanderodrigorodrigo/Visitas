@@ -1,5 +1,6 @@
 <?php
 // Iniciar sesión para utilizar variables de sesión
+include "database.php";
 session_start();
 
 // Comprobar si el usuario ya ha iniciado sesión
