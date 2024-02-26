@@ -39,4 +39,3 @@ class EmpleadoModel {
         return $resultado;
     }
 }
-?>
