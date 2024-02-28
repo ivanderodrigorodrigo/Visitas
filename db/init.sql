@@ -27,7 +27,10 @@ CREATE TABLE EMPLEADOS (
     email_emp VARCHAR (100),
     contrasenya_emp VARCHAR(250), 
 	rol_id int not null,
-	activo_emp char(1) DEFAULT 'S'
+	activo_emp char(1) DEFAULT 'S',
+    estado_id INT,
+    FOREIGN KEY (rol_id) REFERENCES ROLES(id_rol),
+    FOREIGN KEY (estado_id) REFERENCES ESTADOS_EMP(id_estado)
 );	
 
 CREATE TABLE EMPRESA (
@@ -100,8 +103,7 @@ CREATE TABLE APP_LOGS (
 
 CREATE TABLE MODULOS (
 	id_modulo INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_modulo VARCHAR(50),
-    url_modulo VARCHAR(250)
+    nombre_modulo VARCHAR(50)
 );	
 
 CREATE TABLE MODULOS_ROLES (
@@ -109,6 +111,12 @@ CREATE TABLE MODULOS_ROLES (
     id_rol INT,
     PRIMARY KEY (id_rol,id_modulo)
 );	
+
+CREATE TABLE ESTADOS_EMP (
+    id_estado INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_estado VARCHAR(50)
+);
+
 
 DROP TRIGGER IF EXISTS `db_piis`.`EMPLEADOS_AFTER_INSERT`;
 
@@ -144,3 +152,4 @@ VALUES ('Administrador'), ('Recepcionista'),('Seguridad');
 INSERT INTO `db_piis`.`empleados`(`dni_emp`,`nombre_emp`,`apellido_emp`,`email_emp`,`contrasenya_emp`,`rol_id`,`activo_emp`)
 VALUES ('12345678P','Admin', 'Admin','admin@gmail.com','123456',1, 'S');
 
+INSERT INTO ESTADOS_EMP (nombre_estado) VALUES ('Soltero/a'),('Casado/a'),('Divorciado/a'),('Viudo/a');  

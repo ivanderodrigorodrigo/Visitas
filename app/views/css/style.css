@@ -1,0 +1,233 @@
+
+body, .menu-lateral {
+    background-color: #e7f0fa; /* Color de fondo azul claro para la página */
+  }
+  
+  .rounded-box {
+      border-radius: 15px;
+      background-color: white;
+      padding: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .menu-seccion {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .menu-seccion li, .fas {
+    padding: 10px 0;
+    margin-right: 10px;
+    font-size: 20px; /* Ajuste para mejor visualización */
+  }
+  
+  .formulario-seccion {
+    margin-bottom: 15px; /* Reducción para evitar scroll */
+  }
+  
+  .formulario-seccion label, .formulario-seccion input, .btn {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 16px; /* Reducción para adaptabilidad */
+    color: #495057;
+  }
+  
+  .btn {
+    margin-top: 20px; /* Ajuste de margen */
+    padding: 10px 20px;
+    font-size: 16px; /* Reducción para consistencia */
+  }
+  
+  .tituloEmpleados {
+    margin-bottom: 20px; 
+  }
+  
+  .primerMenu {
+    margin-top: 30px; /* Ajuste de margen superior */
+    font-size: 18px; /* Ajuste de tamaño de fuente */
+  }
+  
+  .btn-accept{
+    background-color: #0b5394;
+    color: white;
+  }
+
+  .btn-modify {
+    background-color: #7bb5cf;;
+    color: white;
+  }
+
+  .btn-delete {
+    background-color: #ff0000;
+    color: white;
+  }
+  
+  .btn-cancel {
+    background-color: white;
+    color: grey;
+    border-color: grey;
+  }
+  
+  .img-logo {
+    max-width: 80px; 
+  }
+  
+  .recuadroInfo, .alert {
+    margin-top: 20px; /* Ajuste de margen */
+    background-color: white; 
+  }
+  
+  .ayuda-info {
+    font-weight: bold; 
+    color: #0b5394;
+  }
+  
+  /* Media Queries para Tablet y PC */
+  @media (min-width: 768px) {
+    .menu-lateral {
+      width: 25%; /* Ajuste de ancho para tablet */
+    }
+    
+    .col-md-10 {
+      width: 75%; /* Ajuste de ancho del contenido principal para tablet */
+    }
+    
+    .form-row .col {
+      flex: 1; /* Flexibilidad para elementos del formulario */
+      margin-right: 15px; /* Espaciado entre elementos */
+    }
+    
+    .btn {
+      padding: 10px 5%; /* Ajuste de padding para botones */
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .menu-lateral {
+      width: 20%; /* Ajuste de ancho para PC */
+    }
+    
+    .col-md-10 {
+      width: 80%; /* Ajuste de ancho del contenido principal para PC */
+    }
+    
+    .formulario-seccion label, .formulario-seccion input, .formulario-seccion select, .btn {
+      font-size: 18px; /* Aumento de tamaño de fuente para mejor legibilidad */
+    }
+    
+    .btn {
+      padding: 10px 50px; /* Ajuste de padding para botones */
+    }
+    
+    .img-logo {
+      max-width: 100px; /* Ajuste de tamaño para logo */
+    }
+  }
+  
+  /* Ajustes de layout para evitar scroll */
+  body, html, .container-fluid, .row, .menu-lateral, .col-md-10 {
+    height: 100vh; /* Altura completa de la ventana */
+    overflow: hidden; /* Evitar scroll */
+  }
+  
+  /* Asegurarse de que el contenido interno sea scrollable si es necesario */
+  .menu-lateral, .col-md-10 {
+    overflow-y: auto;
+  }
+
+/* Asegurando que los botones estén uno al lado del otro */
+.btn {
+    display: inline-block; /* Hace que los botones se muestren en línea */
+    margin-right: 10px; /* Espacio entre los botones */
+}
+
+/* Ajuste para el último botón para evitar espacio extra a la derecha */
+.btn:last-child {
+    margin-right: 0; /* Elimina el margen derecho del último botón */
+}
+
+/* Media Query específica para tabletas */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .rounded-box {
+        padding: 10px; /* Reduce el padding para disminuir el tamaño del recuadro */
+        margin: 10px auto; /* Reduce el margen superior e inferior, y centra el recuadro horizontalmente */
+        max-height: 80vh; /* Opcional: ajusta la altura máxima para evitar el desplazamiento vertical */
+        overflow-y: auto; /* Permite el desplazamiento dentro del recuadro si es necesario */
+    }
+
+    /* Ajustes adicionales para elementos dentro del recuadro, si se requiere reducir más espacio */
+    .formulario-seccion {
+        margin-bottom: 10px; /* Reduce aún más el espacio entre secciones del formulario */
+    }
+
+    .btn {
+        padding: 5px 10px; /* Reduce el padding de los botones para ahorrar espacio */
+        font-size: 14px; /* Reduce el tamaño de fuente de los botones */
+    }
+
+    .formulario-seccion label, .formulario-seccion input, .formulario-seccion select {
+        font-size: 14px; /* Reduce el tamaño de fuente para adaptarse mejor al espacio disponible */
+    }
+
+    .img-logo {
+        max-width: 60px; /* Reduce el tamaño del logo para ahorrar espacio */
+    }
+}
+/* Media Query para tabletas en orientación horizontal */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .rounded-box {
+        padding: 10px; /* Reduce el padding para ahorrar espacio vertical */
+        margin: 10px auto; /* Reduce el margen para asegurar que el recuadro se ajusta bien */
+        max-height: 70vh; /* Ajusta la altura máxima para evitar el scroll vertical */
+        overflow-y: auto; /* Permite el desplazamiento dentro del recuadro si es necesario */
+    }
+
+    .formulario-seccion {
+        margin-bottom: 8px; /* Reduce los márgenes entre secciones del formulario */
+    }
+
+    .formulario-seccion label, .formulario-seccion input, .formulario-seccion select, .btn {
+        font-size: 14px; /* Puede ser útil reducir el tamaño de fuente para ahorrar espacio */
+    }
+
+    .btn {
+        padding: 5px 10px; /* Reduce el padding de los botones */
+        margin-right: 5px; /* Ajusta el margen entre botones */
+    }
+
+    .img-logo {
+        max-width: 50px; /* Considera reducir el tamaño del logo en esta orientación */
+    }
+}
+/* Estilos base para .rounded-box ajustados para mayor flexibilidad */
+.rounded-box {
+    padding: 2vh; /* Usa un porcentaje de la altura del viewport para el padding */
+    margin: 2vh auto; /* Usa un porcentaje de la altura del viewport para los márgenes verticalmente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    overflow-y: auto; /* Permite scroll dentro del recuadro si es estrictamente necesario */
+    max-height: 96vh; /* Ajusta la altura máxima como un porcentaje del viewport */
+}
+
+@media (min-width: 768px) {
+    /* Ajustes para mejorar la visualización en dispositivos más anchos, como tablets en orientación horizontal */
+    .rounded-box {
+        max-width: 95%; /* Limita el ancho máximo para evitar que el recuadro sea demasiado ancho en pantallas grandes */
+    }
+}
+/* Media Query para iPad Air en orientación horizontal */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .formulario-seccion label, .formulario-seccion input, .formulario-seccion select, .btn {
+        font-size: 10px; /* Reduce el tamaño de la fuente para ahorrar espacio */
+    }
+
+    .formulario-seccion {
+        margin-bottom: 8px; /* Reduce el margen entre secciones para ahorrar más espacio */
+    }
+
+    .btn {
+        padding: 5px 10px; /* Reduce el padding de los botones */
+        margin-right: 5px; /* Ajusta el margen derecho para los botones */
+    }
+}
