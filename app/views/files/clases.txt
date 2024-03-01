@@ -1,0 +1,208 @@
+@startuml
+
+class Usuario {
+    +int id
+    +string nombre
+    +string email
+    +string password
+    +int rol_id
+}
+
+class Rol {
+    +int id
+    +string nombre
+}
+
+class Permiso {
+    +int id
+    +string nombre
+    +string descripcion
+}
+
+class Empleado {
+    +int id
+    +string nombre
+    +int departamento_id
+    +int usuario_id
+}
+
+class Departamento {
+    +int id
+    +string nombre
+}
+
+class Visitante {
+    +int id
+    +string nombre
+    +string tipoIdentificacion
+    +string numeroIdentificacion
+    +string empresa
+    +int contacto_empleado_id
+}
+
+class Visita {
+    +int id
+    +int visitante_id
+    +datetime fechaEntrada
+    +datetime fechaSalida
+    +string motivo
+    +int tipo_visita_id
+}
+
+class TipoVisita {
+    +int id
+    +string nombre
+    +string descripcion
+}
+
+class Alerta {
+    +int id
+    +string tipo
+    +string descripcion
+    +datetime fecha
+}
+
+class ConfiguracionSeguridad {
+    +int id
+    +string nombre
+    +string valor
+}
+
+class Reporte {
+    +int id
+    +string tipo
+    +datetime fecha_inicio
+    +datetime fecha_fin
+}
+
+class Analitica {
+    +int id
+    +string nombreAnalisis
+    +string resultado
+}
+
+Usuario "1" -- "1" Rol : tiene >
+Rol "1" -- "*" Permiso : posee >
+Empleado "1" -- "1" Usuario : corresponde a >
+Empleado "1" -- "1" Departamento : pertenece a >
+Visitante "*" -- "1" Empleado : registrado por >
+Visita "*" -- "1" Visitante : pertenece a >
+Visita "*" -- "1" TipoVisita : categorizada como >
+
+@startuml
+
+class Usuario {
+    +int id
+    +string nombre
+    +string email
+    +string password
+    +int rol_id
+}
+
+class Rol {
+    +int id
+    +string nombre
+}
+
+class Permiso {
+    +int id
+    +string nombre
+    +string descripcion
+}
+
+class Empleado {
+    +int id
+    +string nombre
+    +int departamento_id
+    +int usuario_id
+}
+
+class Departamento {
+    +int id
+    +string nombre
+}
+
+class Visitante {
+    +int id
+    +string nombre
+    +string tipoIdentificacion
+    +string numeroIdentificacion
+    +string empresa
+    +int contacto_empleado_id
+}
+
+class Visita {
+    +int id
+    +int visitante_id
+    +datetime fechaEntrada
+    +datetime fechaSalida
+    +string motivo
+    +int tipo_visita_id
+}
+
+class TipoVisita {
+    +int id
+    +string nombre
+    +string descripcion
+}
+
+class Alerta {
+    +int id
+    +string tipo
+    +string descripcion
+    +datetime fecha
+}
+
+class ConfiguracionSeguridad {
+    +int id
+    +string nombre
+    +string valor
+}
+
+class Reporte {
+    +int id
+    +string tipo
+    +datetime fecha_inicio
+    +datetime fecha_fin
+}
+
+class Analitica {
+    +int id
+    +string nombreAnalisis
+    +string resultado
+}
+
+Usuario "1" -- "1" Rol : tiene >
+Rol "1" -- "*" Permiso : posee >
+Empleado "1" -- "1" Usuario : corresponde a >
+Empleado "1" -- "1" Departamento : pertenece a >
+Visitante "*" -- "1" Empleado : registrado por >
+Visita "*" -- "1" Visitante : pertenece a >
+Visita "*" -- "1" TipoVisita : categorizada como >
+
+' Clases de Controladores
+class UsuarioController {
+}
+
+class EmpleadoController {
+}
+
+class VisitaController {
+}
+
+class ReporteController {
+}
+
+class AlertaController {
+}
+
+' Relaciones Controladores - Modelos
+UsuarioController ..> Usuario : controla >
+EmpleadoController ..> Empleado : controla >
+VisitaController ..> Visita : controla >
+VisitaController ..> Visitante : controla >
+ReporteController ..> Reporte : controla >
+AlertaController ..> Alerta : controla >
+
+
+@enduml
