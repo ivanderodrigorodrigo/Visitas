@@ -243,4 +243,43 @@ body, .menu-lateral {
         padding: 5px 10px; /* Reduce el padding de los botones */
         margin-right: 5px; /* Ajusta el margen derecho para los botones */
     }
+
+}
+
+/* LISTADO EMPLEADOS */
+
+.table-responsive {
+  border-radius: 5px;
+  overflow: hidden;
+}
+.table thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+.table tbody tr {
+  transition: background-color 0.15s ease-in-out;
+}
+.table tbody tr:hover {
+  background-color: #f2f2f2;
+}
+
+.input-group-prepend {
+  margin-right: -12px;
+
+}
+.input-group-text {
+  background-color: #eeeeee; 
+  border: 1px solid #ced4da; 
+  padding: 20px;
+}
+
+.sortable i {
+  font-size: 0.8rem; /* Ajusta el tamaño de los íconos */
+  color: #0d6efd; /* Color de los íconos */
+  cursor: pointer; /* Cambia el cursor para indicar que son clicables */
+}
+
+/* Opcional: Ocultar uno de los íconos por defecto y cambiarlo con JavaScript al hacer clic */
+.sortable .bi-arrow-up {
+  display: none;
 }

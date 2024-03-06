@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-02-2024 a las 17:13:25
+-- Tiempo de generación: 06-03-2024 a las 19:39:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -22,6 +22,42 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `db_piis` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `db_piis`;
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+DROP PROCEDURE IF EXISTS `get_navs`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_navs` (IN `id_rol` INT)   SELECT
+	m.id_modulo as id,
+    m.nombre_modulo AS nav_principal,
+    m.url_modulo AS url_principal,
+    CASE
+        WHEN ms.id_modulo IS NOT NULL THEN GROUP_CONCAT(ms.id_modulo SEPARATOR ',')
+        ELSE NULL
+    END AS nav_secundaria,
+    n.iconos
+FROM
+    modulos m
+INNER JOIN
+    navs n ON n.id_modulo = m.id_modulo AND id_nav_parent IS NULL
+INNER JOIN
+    modulos_roles mrp ON m.id_modulo = mrp.id_modulo AND mrp.id_rol = id_rol
+LEFT JOIN
+    navs ns ON ns.id_nav_parent = n.id_nav
+LEFT JOIN
+    modulos ms ON ns.id_modulo = ms.id_modulo
+LEFT JOIN
+    modulos_roles mrs ON ms.id_modulo = mrs.id_modulo
+WHERE
+    (ms.id_modulo IS NULL AND mrp.id_rol = id_rol)
+    OR (ms.id_modulo IS NOT NULL AND mrs.id_rol = id_rol)
+GROUP BY
+    m.nombre_modulo, m.url_modulo, n.iconos
+ORDER BY
+    m.id_modulo ASC$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -61,7 +97,27 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`id_emp`, `dni_emp`, `nombre_emp`, `apellido_emp`, `email_emp`, `contrasenya_emp`, `rol_id`, `activo_emp`, `estado_id`) VALUES
-(1, '12345678P', 'Admin', 'Admin', 'admin@gmail.com', '123456', 1, 'S', NULL);
+(1, '12345678P', 'Admin', 'Admin', 'admin@gmail.com', '123456', 1, 'S', NULL),
+(4, '87687178Z', 'Juan', 'Garcia', 'jgarcia@example.com', 'pR5G9Q', 1, 'S', 1),
+(5, '35854895M', 'Ana', 'Fernandez', 'afernandez@example.com', 'ukguQY', 1, 'S', 1),
+(6, '37983440F', 'Pedro', 'Lopez', 'plopez@example.com', '1uPD6o', 1, 'S', 2),
+(7, '35809797D', 'Luisa', 'Martinez', 'lmartinez@example.com', 'dgC3ts', 1, 'S', 2),
+(8, '89075515L', 'Carlos', 'Sanchez', 'csanchez@example.com', 'BWCfJo', 1, 'S', 2),
+(9, '87844489I', 'Maria', 'Rodriguez', 'mrodriguez@example.com', '9xGMSB', 1, 'S', 1),
+(10, '29958370O', 'Jorge', 'Perez', 'jperez@example.com', 'epkpbc', 1, 'S', 2),
+(11, '45871133S', 'Elena', 'Gomez', 'egomez@example.com', 'rZksUT', 1, 'S', 2),
+(12, '98297324W', 'Roberto', 'Ruiz', 'rruiz@example.com', 'LJ21j8', 1, 'S', 3),
+(13, '27829812Q', 'Sofia', 'Diaz', 'sdiaz@example.com', 'CzRdt8', 1, 'S', 2),
+(14, '83780618X', 'Jorge', 'Fernandez', 'jfernandez@example.com', 'ALu52U', 3, 'S', 3),
+(15, '42978275T', 'Elena', 'Fernandez', 'efernandez@example.com', 'g4r9Wf', 2, 'S', 3),
+(16, '16201746G', 'Carlos', 'Rodriguez', 'crodriguez@example.com', 'oVLSPP', 3, 'S', 3),
+(17, '33624953F', 'Sofia', 'Martinez', 'smartinez@example.com', 'UUkMvW', 3, 'S', 2),
+(18, '91283320C', 'Ana', 'Lopez', 'alopez@example.com', 'aDnw4i', 2, 'S', 2),
+(19, '89358767Y', 'Jorge', 'Sanchez', 'jsanchez@example.com', 'lkf6ve', 2, 'S', 3),
+(20, '34518176Z', 'Jorge', 'Garcia', 'jgarcia@example.com', 'BuC0LT', 2, 'S', 3),
+(21, '30806719P', 'Pedro', 'Garcia', 'pgarcia@example.com', '8dZCJB', 2, 'S', 3),
+(22, '08684829C', 'Roberto', 'Sanchez', 'rsanchez@example.com', 'G8q4VB', 2, 'S', 2),
+(23, '57697950I', 'Roberto', 'Ruiz', 'rruiz@example.com', 'lo1Sij', 3, 'S', 2);
 
 --
 -- Disparadores `empleados`
@@ -105,7 +161,7 @@ CREATE TABLE `empresa` (
 --
 
 INSERT INTO `empresa` (`id_empresa`, `nombre_empresa`, `hora_ini_empresa`, `hora_fin_empresa`, `aforo_max_empresa`, `num_empleados`) VALUES
-(1, 'PresentiaL SL', '08:00:00', '18:00:00', 100, 1);
+(1, 'PresentiaL SL', '08:00:00', '18:00:00', 100, 22);
 
 -- --------------------------------------------------------
 
@@ -165,8 +221,23 @@ CREATE TABLE `historico` (
 DROP TABLE IF EXISTS `modulos`;
 CREATE TABLE `modulos` (
   `id_modulo` int(11) NOT NULL,
-  `nombre_modulo` varchar(50) DEFAULT NULL
+  `nombre_modulo` varchar(50) DEFAULT NULL,
+  `url_modulo` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `modulos`
+--
+
+INSERT INTO `modulos` (`id_modulo`, `nombre_modulo`, `url_modulo`) VALUES
+(1, 'Inicio sesión', 'login'),
+(2, 'Empleados', 'empleados'),
+(3, 'Detalles empleados', 'empleadosCRUD'),
+(4, 'Visitas', 'visitas'),
+(5, 'Roles y permisos', 'rolespermisos'),
+(6, 'Informes', ''),
+(7, 'Historial de visitas', 'historial'),
+(8, 'Análisis estadístico', 'analisis');
 
 -- --------------------------------------------------------
 
@@ -177,8 +248,34 @@ CREATE TABLE `modulos` (
 DROP TABLE IF EXISTS `modulos_roles`;
 CREATE TABLE `modulos_roles` (
   `id_modulo` int(11) NOT NULL,
-  `id_rol` int(11) NOT NULL
+  `id_rol` int(11) NOT NULL,
+  `modulo_default` char(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `modulos_roles`
+--
+
+INSERT INTO `modulos_roles` (`id_modulo`, `id_rol`, `modulo_default`) VALUES
+(1, 1, 'N'),
+(2, 1, 'S'),
+(3, 1, 'N'),
+(4, 1, 'N'),
+(5, 1, 'N'),
+(6, 1, 'N'),
+(7, 1, 'N'),
+(8, 1, 'N'),
+(1, 2, 'N'),
+(3, 2, 'N'),
+(4, 2, 'S'),
+(6, 2, 'N'),
+(7, 2, 'N'),
+(1, 3, 'N'),
+(2, 3, 'S'),
+(3, 3, 'N'),
+(6, 3, 'N'),
+(7, 3, 'N'),
+(8, 3, 'N');
 
 -- --------------------------------------------------------
 
@@ -191,6 +288,32 @@ CREATE TABLE `motivos_visita` (
   `id_motivo` int(11) NOT NULL,
   `descripcion_motivo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `navs`
+--
+
+DROP TABLE IF EXISTS `navs`;
+CREATE TABLE `navs` (
+  `id_nav` int(11) NOT NULL,
+  `id_modulo` int(11) DEFAULT NULL,
+  `id_nav_parent` int(11) DEFAULT NULL,
+  `iconos` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `navs`
+--
+
+INSERT INTO `navs` (`id_nav`, `id_modulo`, `id_nav_parent`, `iconos`) VALUES
+(1, 2, NULL, 'fa-users'),
+(2, 4, NULL, 'fa-calendar-alt'),
+(3, 5, NULL, 'fa-tools'),
+(4, 6, NULL, 'fa-chart-line'),
+(5, 7, 4, ''),
+(6, 8, 4, '');
 
 -- --------------------------------------------------------
 
@@ -339,6 +462,14 @@ ALTER TABLE `motivos_visita`
   ADD PRIMARY KEY (`id_motivo`);
 
 --
+-- Indices de la tabla `navs`
+--
+ALTER TABLE `navs`
+  ADD PRIMARY KEY (`id_nav`),
+  ADD KEY `id_modulo` (`id_modulo`),
+  ADD KEY `id_nav_parent` (`id_nav_parent`);
+
+--
 -- Indices de la tabla `permisos`
 --
 ALTER TABLE `permisos`
@@ -388,7 +519,7 @@ ALTER TABLE `app_logs`
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `id_emp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_emp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `empresa`
@@ -418,13 +549,19 @@ ALTER TABLE `historico`
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `motivos_visita`
 --
 ALTER TABLE `motivos_visita`
   MODIFY `id_motivo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `navs`
+--
+ALTER TABLE `navs`
+  MODIFY `id_nav` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -472,6 +609,13 @@ ALTER TABLE `empleados`
 --
 ALTER TABLE `historico`
   ADD CONSTRAINT `historico_ibfk_1` FOREIGN KEY (`id_visita`) REFERENCES `visitas` (`id_visita`);
+
+--
+-- Filtros para la tabla `navs`
+--
+ALTER TABLE `navs`
+  ADD CONSTRAINT `navs_ibfk_1` FOREIGN KEY (`id_modulo`) REFERENCES `modulos` (`id_modulo`),
+  ADD CONSTRAINT `navs_ibfk_2` FOREIGN KEY (`id_nav_parent`) REFERENCES `navs` (`id_nav`);
 
 --
 -- Filtros para la tabla `roles_permisos`
