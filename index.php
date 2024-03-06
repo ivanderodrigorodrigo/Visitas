@@ -6,11 +6,13 @@
     /*---------- Iniciando sesion ----------*/
     require_once "./app/includes/session_start.php";
 
-    if(isset($_GET['views'])){
+    
+    if (!isset($_SESSION['id'])){
+        $url=["login"];
+    } elseif (isset($_GET['views'])){
         $url=explode("/", $_GET['views']);
-    }else{
-        //$url=["login"];
-        $url=["empleados"];
+    }else {
+        $url = [""];
     }
 
 
@@ -24,11 +26,12 @@
 <body>
     <?php
         use app\controllers\viewsController;
-
         $viewsController= new viewsController();
         $vista=$viewsController->obtenerVistasControlador($url[0]);
-        if($vista=="login" || $vista=="404"){
-            require_once "./app/views/content/".$vista."-view.php";
+        if($url[0]=="login" || $vista=="404"){
+            require_once $vista;
+        } elseif ($vista == "logout"){
+            require_once "./app/includes/session_close.php";
         }else{
     ?>    
     <main class="container-fluid h-100">
@@ -36,6 +39,7 @@
 
 
         <?php 
+
             require_once "./app/views/global/nav.php";
             require_once $vista;
         }

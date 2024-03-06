@@ -2,6 +2,8 @@
 body, .menu-lateral {
     background-color: #e7f0fa; /* Color de fondo azul claro para la página */
   }
+
+  
   
   .rounded-box {
       border-radius: 15px;
@@ -17,12 +19,22 @@ body, .menu-lateral {
     padding: 0;
   }
   
+
+  .submenu-seccion {
+    list-style-type: none;
+    padding: 10;
+  }
+
+  .submenu-seccion li a {
+    font-size: 16px;
+  }
+  
   .menu-seccion li, .fas {
     padding: 10px 0;
     margin-right: 10px;
     font-size: 20px; /* Ajuste para mejor visualización */
   }
-  
+
   .formulario-seccion {
     margin-bottom: 15px; /* Reducción para evitar scroll */
   }
@@ -48,6 +60,7 @@ body, .menu-lateral {
     margin-top: 30px; /* Ajuste de margen superior */
     font-size: 18px; /* Ajuste de tamaño de fuente */
   }
+
   
   .btn-accept{
     background-color: #0b5394;

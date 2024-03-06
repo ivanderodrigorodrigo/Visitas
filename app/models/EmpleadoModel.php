@@ -14,6 +14,7 @@ class EmpleadoModel {
         $this->db = $conn;
     }
 
+
     public function get_empleados(){
         $consulta = $this->db->query("SELECT * FROM empleados AS e INNER JOIN roles r ON e.rol_id = r.id_rol LEFT JOIN estados_emp est ON est.id_estado = e.estado_id WHERE e.activo_emp = 'S';");
         
@@ -51,6 +52,24 @@ class EmpleadoModel {
             $this->estados[] = $fila;
         }
         return $this->estados;
+    }
+
+    public function getEmpleadoLogin($email, $pass){
+
+
+        $consulta = $this->db->query("SELECT * FROM empleados WHERE email_emp = '{$email}' AND contrasenya_emp = '{$pass}';");
+        
+        if($consulta->num_rows > 0){
+            $emp = mysqli_fetch_array($consulta);
+            $_SESSION['id']=$emp["id_emp"];
+			$_SESSION['user_name']=$emp["nombre_emp"];
+			$_SESSION['user_surname']=$emp["apellido_emp"];
+            $_SESSION['user_rol']=$emp["rol_id"];
+
+            return true;
+        }
+
+        return false;
     }
 
 

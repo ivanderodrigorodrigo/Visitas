@@ -10,8 +10,23 @@
 			if($vista!=""){
 				$respuesta=$this->obtenerVistasModelo($vista);
 			}else{
-				$respuesta="login";
+				$respuesta=$this->obtenerVistaHome($_SESSION['user_rol']);
 			}
 			return $respuesta;
+		}
+
+
+		/*---------- Controlador obtener opciones nav ----------*/
+		public function obtenerNavsControlador($rol){
+			return $this->obtenerNavs($rol);
+		}
+
+		/*---------- Controlador obtener subnav ----------*/
+		public function obtenerSubNavsControlador($subnavs){	
+			return $this->obtenerSubNavs($subnavs);
+		}
+
+		public function obtenerVistaController($rol){
+			return $this->obtenerVistaHome($rol);
 		}
 	}
