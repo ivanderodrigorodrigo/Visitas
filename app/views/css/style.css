@@ -389,6 +389,20 @@ LISTADO EMPLEADOS
   align-items: center;
 }
 
+.page-selected {
+  display: flex;
+  margin-right: 10px;
+  padding: 10px;
+  padding-left: 20px;
+  border-color: #dee2e6;
+  padding-right: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b5394;
+  font-weight: bolder;
+  color: white;
+}
+
 .page-number:hover, .page-number:focus {
   background-color: #0b5394;
   font-weight: bolder;

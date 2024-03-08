@@ -77,9 +77,11 @@ $_SESSION['page'] = isset($page) ? $page : 1;
                     <button id="prevPage" class="btn btn-left"
                     onclick="window.location='<?php echo APP_URL; ?>empleados?pagina=<?php echo  $_SESSION['page'] == 1 ? 1 : $_SESSION['page'] - 1; ?>'">
                     <i class="fas fa-arrow-left"></i></button>
-                    <button class="btn page-number"><?php echo $_SESSION['page'] ?></button>
-                    <button class="btn page-number">2</button>
-                    <button class="btn page-number">3</button>
+                    <?php 
+                    for ($i = 1; $i<=$total_paginas;$i++){ ?>
+                        <button class="btn <?php if ($i == $_SESSION['page'] ) echo 'page-selected'; else echo 'page-number' ?> " onclick="window.location='<?php echo APP_URL; ?>empleados?pagina=<?php echo  $i; ?>'">
+                        <?php echo $i; ?></button>
+                    <?php } ?>
                     <button id="nextPage" class="btn btn-right" 
                         onclick="window.location='<?php echo APP_URL; ?>empleados?pagina=<?php echo  $_SESSION['page'] + 1; ?>'">
                         <i class="fas fa-arrow-right"></i>
