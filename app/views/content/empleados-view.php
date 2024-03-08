@@ -22,7 +22,10 @@ $emp = new empleadoController();
         <div class="form-row formulario-seccion">
             <div class="input-group">                
                 <input type="text" id="searchInput" class="form-search" placeholder="Busca por Nombre/Apellido" aria-label="Buscar" aria-describedby="basic-addon1">
-                <button class="btn btn-search" type="button"> Buscar</button>  
+                <button class="btn btn-search" type="button">Buscar</button>  
+                <div class="newUser">
+            <button id="anyadirEmpleado" class="btn btn-newUser" type="submit">Agregar Usuario</button>
+        </div>
             </div>
         </div>
         <!-- Tercera fila: Tabla -->
@@ -58,7 +61,9 @@ $emp = new empleadoController();
                 <!-- Sección de paginación -->
                 <div class="pagination-section">
                     <button id="prevPage" class="btn btn-left"><i class="fas fa-arrow-left"></i></button>
-                    <span id="currentPage">1</span>
+                    <button class="btn page-number">1</button>
+                    <button class="btn page-number">2</button>
+                    <button class="btn page-number">3</button>
                     <button id="nextPage" class="btn btn-right"><i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
@@ -75,9 +80,7 @@ $emp = new empleadoController();
                 <img src="<?php echo APP_URL; ?>app/views/img/Logo CheckInSight.png" class="img-logo" alt="Logo" />
             </div>
         </div> -->
-        <div class="newUser">
-            <button id="anyadirEmpleado" class="btn btn-newUser" type="submit">Agregar Usuario</button>
-        </div>
+
         
     </div>
 </div>
