@@ -1,5 +1,4 @@
 <?php
-
 namespace app\includes;
 use app\models\EmpleadoModel;
 use app\controllers\viewsController;

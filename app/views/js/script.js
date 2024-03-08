@@ -1,4 +1,3 @@
-
 function activarSubMenu(idsub){
     var submenu = document.getElementById(idsub);
     var dropdown = document.getElementById('m-dropdown');

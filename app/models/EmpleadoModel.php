@@ -24,7 +24,7 @@ class EmpleadoModel {
     public function get_empleados($pagina){
         $pagina = ($pagina - 1) * $this->filas;
         $consulta = $this->db->query("SELECT * FROM empleados AS e INNER JOIN roles r ON e.rol_id = r.id_rol LIMIT {$pagina}, {$this->filas};");
-        
+      
         while($fila = $consulta->fetch_assoc()){
             $this->empleados[] = $fila;
         }
@@ -69,8 +69,8 @@ class EmpleadoModel {
         if($consulta->num_rows > 0){
             $emp = mysqli_fetch_array($consulta);
             $_SESSION['id']=$emp["id_emp"];
-			$_SESSION['user_name']=$emp["nombre_emp"];
-			$_SESSION['user_surname']=$emp["apellido_emp"];
+			      $_SESSION['user_name']=$emp["nombre_emp"];
+			      $_SESSION['user_surname']=$emp["apellido_emp"];
             $_SESSION['user_rol']=$emp["rol_id"];
 
             return true;

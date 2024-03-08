@@ -118,7 +118,6 @@ INSERT INTO `empleados` (`id_emp`, `dni_emp`, `nombre_emp`, `apellido_emp`, `ema
 (21, '30806719P', 'Pedro', 'Garcia', 'pgarcia@example.com', '8dZCJB', 2, 'S', 3),
 (22, '08684829C', 'Roberto', 'Sanchez', 'rsanchez@example.com', 'G8q4VB', 2, 'S', 2),
 (23, '57697950I', 'Roberto', 'Ruiz', 'rruiz@example.com', 'lo1Sij', 3, 'S', 2);
-
 --
 -- Disparadores `empleados`
 --

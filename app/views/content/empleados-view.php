@@ -1,3 +1,4 @@
+
 <?php
 
 use app\controllers\empleadoController;
@@ -153,4 +154,5 @@ $_SESSION['page'] = isset($page) ? $page : 1;
         });
     });
 </script>
+
 

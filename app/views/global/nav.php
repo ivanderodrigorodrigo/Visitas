@@ -1,4 +1,3 @@
-
 <?php
 use app\controllers\viewsController;
 $viewsController2 = new viewsController();
@@ -46,4 +45,3 @@ $viewsController2 = new viewsController();
         window.location.href = 'logout';
     }
 </script>
-

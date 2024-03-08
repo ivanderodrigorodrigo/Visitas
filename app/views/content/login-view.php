@@ -1,3 +1,4 @@
+
 <?php
 use app\includes\authenticate;
 $auth = new authenticate();
@@ -40,6 +41,5 @@ $auth = new authenticate();
     </div>
 </body>
 </html>
-
 
 

@@ -3,7 +3,6 @@
 namespace app\controllers;
 use app\models\EmpleadoModel;
 
-
 class empleadoController extends EmpleadoModel {
 
     private $emp;

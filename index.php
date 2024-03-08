@@ -6,7 +6,6 @@
     /*---------- Iniciando sesion ----------*/
     require_once "./app/includes/session_start.php";
 
-    
     if (!isset($_SESSION['id'])){
         $url=["login"];
     } elseif (isset($_GET['views'])){
