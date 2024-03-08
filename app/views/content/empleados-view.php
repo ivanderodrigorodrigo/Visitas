@@ -1,8 +1,22 @@
 <?php
 
 use app\controllers\empleadoController;
+use app\controllers\globalController;
 
 $emp = new empleadoController();
+$global = new globalController();
+
+//Obtener el número total de empleados de la BBDD
+$total_empleados = $emp->getTotalEmpleados();
+
+//Obtener la cantida de páginas necesarias para mostrar todos los datos
+$total_paginas = ceil($total_empleados / FILAS_TABLA);
+
+
+//Obtener la página que vamos a mostrar en la tabla
+$page = $global->getid("pagina");
+$_SESSION['page'] = isset($page) ? $page : 1;
+
 ?>
 <div class="col-md-10">
     <div class="rounded-box d-flex flex-column justify-content-center">
@@ -41,13 +55,13 @@ $emp = new empleadoController();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($emp->mostrarEmpleados() as $empleado) : ?>
+                            <?php foreach ($emp->mostrarEmpleados($_SESSION['page']) as $empleado) : ?>
                                 <tr onclick="window.location='<?php echo APP_URL; ?>empleadosCRUD?id_emp=<?php echo $empleado['id_emp'] ?>'">
                                     <td><?= $empleado['nombre_emp'] ?></td>
                                     <td><?= $empleado['apellido_emp'] ?></td>
                                     <td><?= $empleado['dni_emp'] ?></td>
                                     <td><?= $empleado['nombre_rol'] ?></td>
-                                    <td><?= $empleado['nombre_estado'] ?></td>
+                                    <td><?= $empleado['activo_emp'] = 'S' ? 'Alta' : 'Baja' ?></td>
                                     <td class="apartadoAccion"><label class="fas fa-edit" onclick=""></label></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -57,9 +71,14 @@ $emp = new empleadoController();
 
                 <!-- Sección de paginación -->
                 <div class="pagination-section">
-                    <button id="prevPage" class="btn btn-left"><i class="fas fa-arrow-left"></i></button>
-                    <span id="currentPage">1</span>
-                    <button id="nextPage" class="btn btn-right"><i class="fas fa-arrow-right"></i></button>
+                    <button id="prevPage" class="btn btn-left"
+                    onclick="window.location='<?php echo APP_URL; ?>empleados?pagina=<?php echo  $_SESSION['page'] == 1 ? 1 : $_SESSION['page'] - 1; ?>'">
+                    <i class="fas fa-arrow-left"></i></button>
+                    <span id="currentPage"><?php echo $_SESSION['page'] ?></span>
+                    <button id="nextPage" class="btn btn-right" 
+                        onclick="window.location='<?php echo APP_URL; ?>empleados?pagina=<?php echo  $_SESSION['page'] + 1; ?>'">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
         </div>

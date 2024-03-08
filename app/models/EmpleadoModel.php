@@ -1,22 +1,29 @@
 <?php
 
 namespace app\models;
+if(file_exists(__DIR__."/../../config/app.php")){
+    require_once __DIR__."/../../config/app.php";
+}
+
 
 class EmpleadoModel {
     private $empleados;
     private $estados;
     private $db;
+    private $filas;
 
     public function __construct(){
         include './app/includes/database.php';
         $this->empleados = array();
         $this->estados = array();
         $this->db = $conn;
+        $this->filas = FILAS_TABLA;
     }
 
 
-    public function get_empleados(){
-        $consulta = $this->db->query("SELECT * FROM empleados AS e INNER JOIN roles r ON e.rol_id = r.id_rol LEFT JOIN estados_emp est ON est.id_estado = e.estado_id WHERE e.activo_emp = 'S';");
+    public function get_empleados($pagina){
+        $pagina = ($pagina - 1) * $this->filas;
+        $consulta = $this->db->query("SELECT * FROM empleados AS e INNER JOIN roles r ON e.rol_id = r.id_rol LIMIT {$pagina}, {$this->filas};");
         
         while($fila = $consulta->fetch_assoc()){
             $this->empleados[] = $fila;
@@ -70,6 +77,19 @@ class EmpleadoModel {
         }
 
         return false;
+    }
+
+    public function getTotalEmpleados(){
+        
+        $consulta = $this->db->query("SELECT COUNT(id_emp) as TOTAL FROM EMPLEADOS;");
+        
+        if($consulta->num_rows > 0){
+            $emp = mysqli_fetch_array($consulta);
+            return $emp["TOTAL"];
+            return true;
+        }
+
+        return 0;
     }
 
 
