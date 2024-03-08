@@ -2,8 +2,6 @@
 body, .menu-lateral {
     background-color: #e7f0fa; /* Color de fondo azul claro para la página */
   }
-
-  
   
   .rounded-box {
       border-radius: 15px;
@@ -246,7 +244,70 @@ body, .menu-lateral {
 
 }
 
-/* LISTADO EMPLEADOS */
+
+
+
+/*
+
+---------------------
+
+LISTADO EMPLEADOS
+
+---------------------
+
+
+*/
+
+
+
+.rounded-box {
+  border-radius: 15px; /* Preserva los bordes redondeados */
+  overflow: hidden; /* Oculta el desbordamiento para mantener visibles los bordes redondeados */
+}
+
+.rounded-box-inner {
+  max-height: calc(100vh - 100px); /* Ajusta este valor según sea necesario */
+  overflow-y: auto; /* Permite el desplazamiento dentro de este contenedor */
+  padding: 20px; /* Asegura que el contenido no toque los bordes */
+}
+
+
+.input-group {
+  display: flex;
+  align-items: center; /* Esta propiedad ya asegura la alineación vertical, pero revisemos el padding y margin */
+  justify-content: start; /* Alinea el input y el botón al inicio del contenedor */
+  gap: 10px; /* Espacio entre el input y el botón */
+  width: 100%; /* Asegura que el grupo de entrada utilice todo el ancho disponible */
+}
+
+.form-search {
+  flex-grow: 1;
+  max-width: 50%; /* Limita el ancho del input a la mitad del contenedor */
+  margin: 0; /* Asegúrate de que no haya margen extra */
+  padding: 0.375rem 0.75rem; /* Ajusta el relleno para igualarlo con el botón */
+}
+
+.btn-search {
+
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 0; /* Elimina cualquier margen extra */
+  align-self: stretch; /* Hace que el botón se estire para llenar el espacio disponible en su contenedor, si es necesario */
+}
+
+@media (max-width: 768px) {
+  .input-group {
+      flex-direction: column;
+      gap: 5px; /* Reduce el espacio entre elementos para pantallas pequeñas */
+  }
+
+  .form-search, .btn-search {
+      width: 100%; /* Permite que ambos elementos ocupen todo el ancho en dispositivos más pequeños */
+      max-width: none; /* Remueve el límite de ancho en dispositivos más pequeños */
+      margin: 0; /* Asegura que no haya margen extra en dispositivos más pequeños */
+  }
+}
+
 
 .table-responsive {
   border-radius: 5px;
@@ -263,14 +324,10 @@ body, .menu-lateral {
   background-color: #f2f2f2;
 }
 
-.input-group-prepend {
-  margin-right: -12px;
-
-}
-.input-group-text {
-  background-color: #eeeeee; 
-  border: 1px solid #ced4da; 
-  padding: 20px;
+.table th, .table td, thead th {
+  padding: 8px; /* Reduce el relleno para disminuir la altura de las filas */
+  vertical-align: middle; /* Centra el contenido verticalmente */
+  text-align: left; /* Alinea el texto a la izquierda, ajusta según necesites */
 }
 
 .sortable i {
@@ -283,3 +340,51 @@ body, .menu-lateral {
 .sortable .bi-arrow-up {
   display: none;
 }
+
+/* Estilos para la sección de paginación ajustados */
+.pagination-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px; /* Espacio sobre la sección de paginación */
+}
+
+.pagination-section button {
+  margin: 10 5px; /* Espacio reducido entre los botones y el número de página */
+  cursor: pointer; /* Indica que los botones son clicables */
+  font-size: 0.9rem; /* Tamaño de fuente más pequeño para los botones */
+  border-radius: 5px; /* Bordes redondeados para un aspecto más suave */
+  line-height: 2; /* Ajuste de la altura de línea para alinear el texto verticalmente */
+}
+
+.btn-left {
+  border-color: #dee2e6;
+  color: #ced4da;
+  margin-right: 50px; /* Espacio adicional a la derecha del botón de página anterior */
+}
+
+.btn-right {
+  border-color: #dee2e6;
+  color: #ced4da;
+  margin-left: 50px; /* Espacio adicional a la izquierda del botón de página siguiente */
+}
+
+.fa-arrow-right, .fa-arrow-left{
+  padding: 5px;
+  align-items: center;
+}
+ 
+.pagination-section span {
+  font-size: 1rem; /* Tamaño de fuente ajustado para el número de página */
+}
+
+.btn-newUser{
+  background-color: #0b5394;
+  color: white;
+}
+
+.btn-search{
+  background-color: #0b5394;
+  color: white;
+}
+

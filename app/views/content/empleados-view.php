@@ -11,14 +11,20 @@ $emp = new empleadoController();
             <h2 class="tituloEmpleados">Lista de Empleados</h2>
         </div>
         <!-- Segunda fila: Input de búsqueda -->
-        <div class="form-row formulario-seccion">
+        <!-- <div class="form-row formulario-seccion">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text form-control" id="basic-addon1"><i class="fas fa-search"></i></span>
                 </div>
                 <input type="text" id="searchInput" class="form-control" placeholder="Busca por nombre" aria-label="Buscar" aria-describedby="basic-addon1">
             </div>
-        </div> 
+        </div> -->
+        <div class="form-row formulario-seccion">
+            <div class="input-group">                
+                <input type="text" id="searchInput" class="form-search" placeholder="Busca por Nombre/Apellido" aria-label="Buscar" aria-describedby="basic-addon1">
+                <button class="btn btn-search" type="button"> Buscar</button>  
+            </div>
+        </div>
         <!-- Tercera fila: Tabla -->
         <div class="form-row formulario-seccion">
             <div class="col mr-0">
@@ -42,16 +48,23 @@ $emp = new empleadoController();
                                     <td><?= $empleado['dni_emp'] ?></td>
                                     <td><?= $empleado['nombre_rol'] ?></td>
                                     <td><?= $empleado['nombre_estado'] ?></td>
-                                    <td><label class="fas fa-edit" onclick=""></label></td>
+                                    <td class="apartadoAccion"><label class="fas fa-edit" onclick=""></label></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Sección de paginación -->
+                <div class="pagination-section">
+                    <button id="prevPage" class="btn btn-left"><i class="fas fa-arrow-left"></i></button>
+                    <span id="currentPage">1</span>
+                    <button id="nextPage" class="btn btn-right"><i class="fas fa-arrow-right"></i></button>
+                </div>
             </div>
         </div>
         <!-- Recuadro informativo y Logo -->
-        <div class="form-row formulario-seccion recuadroInfo">
+        <!-- <div class="form-row formulario-seccion recuadroInfo">
             <div class="col-9">
                 <div class="alert alert-info" role="alert">
                     <p>En esta página puedes: registrar, modificar los datos o dar de baja a un empleado.</p>
@@ -61,8 +74,11 @@ $emp = new empleadoController();
             <div class="col-3">
                 <img src="<?php echo APP_URL; ?>app/views/img/Logo CheckInSight.png" class="img-logo" alt="Logo" />
             </div>
+        </div> -->
+        <div class="newUser">
+            <button id="anyadirEmpleado" class="btn btn-newUser" type="submit">Agregar Usuario</button>
         </div>
-        <a href="<?php echo APP_URL; ?>empleadosCRUD/">Agregar Nuevo Usuario</a>
+        
     </div>
 </div>
 
