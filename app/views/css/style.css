@@ -258,13 +258,19 @@ LISTADO EMPLEADOS
 
 */
 
-
+.tituloEmpleados {
+  margin-top: 40px;
+  display: block; /* Asegura que el título se muestre como un bloque */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  text-align: left; /* Centra el texto, si es deseado */
+  overflow: hidden; /* Previene que el texto se desborde */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
 
 .rounded-box {
   border-radius: 15px; /* Preserva los bordes redondeados */
   overflow: hidden; /* Oculta el desbordamiento para mantener visibles los bordes redondeados */
 }
-
 .rounded-box-inner {
   max-height: calc(100vh - 100px); /* Ajusta este valor según sea necesario */
   overflow-y: auto; /* Permite el desplazamiento dentro de este contenedor */
@@ -288,24 +294,21 @@ LISTADO EMPLEADOS
 }
 
 .btn-search {
-
+  background-color:#e7f0fa;
+  color: black;
   padding-left: 30px;
   padding-right: 30px;
-  margin: 0; /* Elimina cualquier margen extra */
-  align-self: stretch; /* Hace que el botón se estire para llenar el espacio disponible en su contenedor, si es necesario */
+  margin: 20px; 
+  
+
 }
 
-@media (max-width: 768px) {
-  .input-group {
-      flex-direction: column;
-      gap: 5px; /* Reduce el espacio entre elementos para pantallas pequeñas */
-  }
-
-  .form-search, .btn-search {
-      width: 100%; /* Permite que ambos elementos ocupen todo el ancho en dispositivos más pequeños */
-      max-width: none; /* Remueve el límite de ancho en dispositivos más pequeños */
-      margin: 0; /* Asegura que no haya margen extra en dispositivos más pequeños */
-  }
+.btn-newUser{
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 20px; 
+  background-color: #0b5394;
+  color: white;
 }
 
 
@@ -321,7 +324,7 @@ LISTADO EMPLEADOS
   transition: background-color 0.15s ease-in-out;
 }
 .table tbody tr:hover {
-  background-color: #f2f2f2;
+  background-color: #e7f0fa;
 }
 
 .table th, .table td, thead th {
@@ -332,7 +335,7 @@ LISTADO EMPLEADOS
 
 .sortable i {
   font-size: 0.8rem; /* Ajusta el tamaño de los íconos */
-  color: #0d6efd; /* Color de los íconos */
+  color: #0b5394; /* Color de los íconos */
   cursor: pointer; /* Cambia el cursor para indicar que son clicables */
 }
 
@@ -346,11 +349,11 @@ LISTADO EMPLEADOS
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5px; /* Espacio sobre la sección de paginación */
+  margin-top: 2px; /* Espacio sobre la sección de paginación */
 }
 
 .pagination-section button {
-  margin: 10 5px; /* Espacio reducido entre los botones y el número de página */
+  margin: 5 5px; /* Espacio reducido entre los botones y el número de página */
   cursor: pointer; /* Indica que los botones son clicables */
   font-size: 0.9rem; /* Tamaño de fuente más pequeño para los botones */
   border-radius: 5px; /* Bordes redondeados para un aspecto más suave */
@@ -360,31 +363,42 @@ LISTADO EMPLEADOS
 .btn-left {
   border-color: #dee2e6;
   color: #ced4da;
-  margin-right: 50px; /* Espacio adicional a la derecha del botón de página anterior */
+  margin-right: 20px; /* Espacio adicional a la derecha del botón de página anterior */
 }
 
 .btn-right {
   border-color: #dee2e6;
   color: #ced4da;
-  margin-left: 50px; /* Espacio adicional a la izquierda del botón de página siguiente */
+  margin-left: 20px; /* Espacio adicional a la izquierda del botón de página siguiente */
 }
 
 .fa-arrow-right, .fa-arrow-left{
-  padding: 5px;
+  padding: 2px;
   align-items: center;
 }
  
-.pagination-section span {
-  font-size: 1rem; /* Tamaño de fuente ajustado para el número de página */
+
+.page-number {
+  display: flex;
+  margin-right: 10px;
+  padding: 10px;
+  padding-left: 20px;
+  border-color: #dee2e6;
+  padding-right: 20px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn-newUser{
+.page-number:hover, .page-number:focus {
   background-color: #0b5394;
-  color: white;
+  font-weight: bolder;
+  color: white; /* Cambia el color de fondo al pasar el ratón para indicar interactividad */
 }
 
-.btn-search{
-  background-color: #0b5394;
+/* Estilo para el número de página activo */
+.page-number.active {
+  background-color: #495057;
   color: white;
 }
 
@@ -488,4 +502,108 @@ LOGIN
   border-radius: 5px; /* Opcional: bordes redondeados */
   font-size: 16px; /* Tamaño del texto, ajustable a tus necesidades */
 }
+
+
+/*
+---------------------
+
+LOGIN
+
+---------------------
+
+*/
+
+.body_login {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #EBF5FB; /* Color de fondo azul claro */
+}
+
+
+.top-right-image {
+  position: fixed; /* Posición fija en la pantalla */
+  top: 20px;    /* 10px desde la parte superior de la pantalla */
+  right: 50px;  /* 10px desde la parte derecha de la pantalla */
+  max-width: 100px; /* Ajusta esto según el tamaño deseado de tu imagen */
+  max-height: 100px; /* Ajusta esto según el tamaño deseado de tu imagen */
+}
+
+  .login-container {
+  background: #fff;
+  padding: 45px 20px;
+  border-radius: 15px;
+  width: 400px; 
+  text-align: center;
+}
+.login-container h2 {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-size: 18px; /* Cambia el tamaño de la fuente a 18px, ajusta según tus necesidades */
+}
+.login-form {
+  margin-bottom: 10px;
+}
+.login-form input {
+  width: calc(100% - 22px); /* Ajuste de ancho para tener en cuenta el padding y los bordes */
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.login-form button {
+  padding: 10px 20px; /* Añade un padding horizontal para que el botón no esté justo contra el texto */
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  display: inline-block; /* Cambia a inline-block para que el botón se ajuste al contenido */
+  /* Quita el ancho del 100% para que el botón se ajuste al contenido */
+}
+
+/* Añade esto para centrar el botón dentro del formulario */
+.login-form {
+  text-align: center; /* Centra los elementos inline o inline-block */
+}
+
+.login-form button:hover {
+  background-color: #0056b3;
+}
+.footer-links {
+  position: absolute;
+  bottom: 20px;
+  left: 50px; /* Alineación a la izquierda */
+  width: auto;
+}
+.footer-links a {
+  text-decoration: none;
+  color: #007bff;
+  margin-right: 15px; /* Espaciado entre enlaces */
+}
+.error-message {
+  color: red;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.presential-link {
+  position: fixed; /* Posición fija en la pantalla */
+  bottom: 20px;   /* 10px desde la parte inferior de la pantalla */
+  right: 50px;    /* 10px desde la parte derecha de la pantalla */
+  background-color: black; /* Fondo negro */
+  color: white; /* Texto en blanco */
+  padding: 5px 10px; /* Un poco de relleno alrededor del texto */
+  text-decoration: none; /* Opcional: quitar el subrayado del enlace */
+  border-radius: 5px; /* Opcional: bordes redondeados */
+  font-size: 16px; /* Tamaño del texto, ajustable a tus necesidades */
+}
+
+
+
 

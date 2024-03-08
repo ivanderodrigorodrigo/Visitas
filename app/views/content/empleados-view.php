@@ -36,7 +36,10 @@ $_SESSION['page'] = isset($page) ? $page : 1;
         <div class="form-row formulario-seccion">
             <div class="input-group">                
                 <input type="text" id="searchInput" class="form-search" placeholder="Busca por Nombre/Apellido" aria-label="Buscar" aria-describedby="basic-addon1">
-                <button class="btn btn-search" type="button"> Buscar</button>  
+                <button class="btn btn-search" type="button">Buscar</button>  
+                <div class="newUser">
+            <button id="anyadirEmpleado" class="btn btn-newUser" type="submit">Agregar Usuario</button>
+        </div>
             </div>
         </div>
         <!-- Tercera fila: Tabla -->
@@ -74,7 +77,9 @@ $_SESSION['page'] = isset($page) ? $page : 1;
                     <button id="prevPage" class="btn btn-left"
                     onclick="window.location='<?php echo APP_URL; ?>empleados?pagina=<?php echo  $_SESSION['page'] == 1 ? 1 : $_SESSION['page'] - 1; ?>'">
                     <i class="fas fa-arrow-left"></i></button>
-                    <span id="currentPage"><?php echo $_SESSION['page'] ?></span>
+                    <button class="btn page-number"><?php echo $_SESSION['page'] ?></button>
+                    <button class="btn page-number">2</button>
+                    <button class="btn page-number">3</button>
                     <button id="nextPage" class="btn btn-right" 
                         onclick="window.location='<?php echo APP_URL; ?>empleados?pagina=<?php echo  $_SESSION['page'] + 1; ?>'">
                         <i class="fas fa-arrow-right"></i>
@@ -94,9 +99,7 @@ $_SESSION['page'] = isset($page) ? $page : 1;
                 <img src="<?php echo APP_URL; ?>app/views/img/Logo CheckInSight.png" class="img-logo" alt="Logo" />
             </div>
         </div> -->
-        <div class="newUser">
-            <button id="anyadirEmpleado" class="btn btn-newUser" type="submit">Agregar Usuario</button>
-        </div>
+
         
     </div>
 </div>
