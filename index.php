@@ -34,10 +34,13 @@
             require_once "./app/includes/session_close.php";
         }else{
     ?>    
-    <main class="container-fluid h-100">
-        <div class="row h-100">
-
-
+    <main class="container-fluid d-flex flex-column">
+        <header>
+        <?php 
+            require_once "./app/views/global/header.php";
+        ?>
+        </header>
+        <div class="row flex-grow-1">
         <?php 
 
             require_once "./app/views/global/nav.php";

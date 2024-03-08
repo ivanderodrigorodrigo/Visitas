@@ -10,17 +10,22 @@ $auth = new authenticate();
     <title>Iniciar Sesión</title>
 </head>
 <body class="body_login">
-    <img src="ruta-a-tu-imagen.jpg" alt="Descripción de la imagen" class="top-right-image" />  
     
     <div class="login-container">
-        <img src="path-to-your-logo.png" alt="Logo" /> <!-- Reemplaza con la ruta a tu logo -->
-        <h2>Accede a tu aplicación <strong>CheckInSight</strong></h2>
+        <img class="img-logo-login" src="<?php echo APP_URL; ?>app/views/img/Logo CheckInSight.png" alt="Logo" /> <!-- Reemplaza con la ruta a tu logo -->
+        <p>Accede a tu aplicación <strong>CheckInSight</strong></p>
         <div class="error-message">
         <!-- Espacio reservado para mensaje de error -->
         </div>
         <form class="login-form" action="<?php echo  $auth->verificarUser(); ?>" method="post">
-        <input type="email" id="email" name="email" placeholder="Email" required>
-        <input type="password" id="password" name="password" placeholder="Contraseña" required>
+            <div class="login-form-seccion">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="" required>
+            </div>
+            <div class="login-form-seccion">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="" required>
+            </div>
         <button type="submit">Iniciar Sesión</button>
         </form>
         <a href="#">¿Has olvidado tu contraseña?</a>

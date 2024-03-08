@@ -2,13 +2,13 @@
 body, .menu-lateral {
     background-color: #e7f0fa; /* Color de fondo azul claro para la página */
   }
-  
+
   .rounded-box {
       border-radius: 15px;
       background-color: white;
       padding: 20px;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   }
   
@@ -17,10 +17,9 @@ body, .menu-lateral {
     padding: 0;
   }
   
-
   .submenu-seccion {
     list-style-type: none;
-    padding: 10;
+    padding: 5px;
   }
 
   .submenu-seccion li a {
@@ -55,7 +54,7 @@ body, .menu-lateral {
   }
   
   .primerMenu {
-    margin-top: 30px; /* Ajuste de margen superior */
+    margin-top: 10px; /* Ajuste de margen superior */
     font-size: 18px; /* Ajuste de tamaño de fuente */
   }
 
@@ -424,6 +423,11 @@ LOGIN
   background-color: #EBF5FB; /* Color de fondo azul claro */
 }
 
+.img-logo-login {
+  max-width: 120px; 
+}
+
+
 
 .top-right-image {
   position: fixed; /* Posición fija en la pantalla */
@@ -433,29 +437,33 @@ LOGIN
   max-height: 100px; /* Ajusta esto según el tamaño deseado de tu imagen */
 }
 
-  .login-container {
+.login-container {
   background: #fff;
   padding: 45px 20px;
   border-radius: 15px;
-  width: 400px; 
+  width: 500px; 
   text-align: center;
+  box-shadow: 0px 0px 8px 0px #12243b;
 }
-.login-container h2 {
-  margin-top: 40px;
+
+.login-container p {
+  margin-top: 20px;
   margin-bottom: 20px;
   font-size: 18px; /* Cambia el tamaño de la fuente a 18px, ajusta según tus necesidades */
+  color: #12243b;
 }
+
 .login-form {
   margin-bottom: 10px;
 }
 .login-form input {
   width: calc(100% - 22px); /* Ajuste de ancho para tener en cuenta el padding y los bordes */
   padding: 10px;
-  margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 .login-form button {
+  margin-top: 20px;
   padding: 10px 20px; /* Añade un padding horizontal para que el botón no esté justo contra el texto */
   border: none;
   border-radius: 4px;
@@ -464,6 +472,19 @@ LOGIN
   cursor: pointer;
   display: inline-block; /* Cambia a inline-block para que el botón se ajuste al contenido */
   /* Quita el ancho del 100% para que el botón se ajuste al contenido */
+}
+
+.login-form-seccion {
+  margin-bottom: 15px; /* Reducción para evitar scroll */
+}
+
+.login-form-seccion label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 16px; /* Reducción para adaptabilidad */
+  color: #495057;
+  text-align: left;
+  padding-left: 12px;
 }
 
 /* Añade esto para centrar el botón dentro del formulario */
@@ -504,106 +525,13 @@ LOGIN
 }
 
 
-/*
----------------------
+header{
+  max-height: 70px;
 
-LOGIN
-
----------------------
-
-*/
-
-.body_login {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #EBF5FB; /* Color de fondo azul claro */
 }
 
-
-.top-right-image {
-  position: fixed; /* Posición fija en la pantalla */
-  top: 20px;    /* 10px desde la parte superior de la pantalla */
-  right: 50px;  /* 10px desde la parte derecha de la pantalla */
-  max-width: 100px; /* Ajusta esto según el tamaño deseado de tu imagen */
-  max-height: 100px; /* Ajusta esto según el tamaño deseado de tu imagen */
+.img-nav{
+  max-width: 50px;
+  margin: 10px;
 }
-
-  .login-container {
-  background: #fff;
-  padding: 45px 20px;
-  border-radius: 15px;
-  width: 400px; 
-  text-align: center;
-}
-.login-container h2 {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  font-size: 18px; /* Cambia el tamaño de la fuente a 18px, ajusta según tus necesidades */
-}
-.login-form {
-  margin-bottom: 10px;
-}
-.login-form input {
-  width: calc(100% - 22px); /* Ajuste de ancho para tener en cuenta el padding y los bordes */
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-.login-form button {
-  padding: 10px 20px; /* Añade un padding horizontal para que el botón no esté justo contra el texto */
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  display: inline-block; /* Cambia a inline-block para que el botón se ajuste al contenido */
-  /* Quita el ancho del 100% para que el botón se ajuste al contenido */
-}
-
-/* Añade esto para centrar el botón dentro del formulario */
-.login-form {
-  text-align: center; /* Centra los elementos inline o inline-block */
-}
-
-.login-form button:hover {
-  background-color: #0056b3;
-}
-.footer-links {
-  position: absolute;
-  bottom: 20px;
-  left: 50px; /* Alineación a la izquierda */
-  width: auto;
-}
-.footer-links a {
-  text-decoration: none;
-  color: #007bff;
-  margin-right: 15px; /* Espaciado entre enlaces */
-}
-.error-message {
-  color: red;
-  height: 20px;
-  margin-bottom: 10px;
-}
-
-.presential-link {
-  position: fixed; /* Posición fija en la pantalla */
-  bottom: 20px;   /* 10px desde la parte inferior de la pantalla */
-  right: 50px;    /* 10px desde la parte derecha de la pantalla */
-  background-color: black; /* Fondo negro */
-  color: white; /* Texto en blanco */
-  padding: 5px 10px; /* Un poco de relleno alrededor del texto */
-  text-decoration: none; /* Opcional: quitar el subrayado del enlace */
-  border-radius: 5px; /* Opcional: bordes redondeados */
-  font-size: 16px; /* Tamaño del texto, ajustable a tus necesidades */
-}
-
-
-
 
