@@ -2,13 +2,12 @@
 body, .menu-lateral {
     background-color: #e7f0fa; /* Color de fondo azul claro para la página */
   }
-  
   .rounded-box {
       border-radius: 15px;
       background-color: white;
       padding: 20px;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   }
   
@@ -17,12 +16,21 @@ body, .menu-lateral {
     padding: 0;
   }
   
+
+  .submenu-seccion {
+    list-style-type: none;
+    padding: 5px;
+  }
+
+  .submenu-seccion li a {
+    font-size: 16px;
+  }
+  
   .menu-seccion li, .fas {
     padding: 10px 0;
     margin-right: 10px;
     font-size: 20px; /* Ajuste para mejor visualización */
   }
-  
   .formulario-seccion {
     margin-bottom: 15px; /* Reducción para evitar scroll */
   }
@@ -45,9 +53,11 @@ body, .menu-lateral {
   }
   
   .primerMenu {
-    margin-top: 30px; /* Ajuste de margen superior */
+    margin-top: 10px; /* Ajuste de margen superior */
     font-size: 18px; /* Ajuste de tamaño de fuente */
   }
+
+
   
   .btn-accept{
     background-color: #0b5394;
@@ -230,4 +240,312 @@ body, .menu-lateral {
         padding: 5px 10px; /* Reduce el padding de los botones */
         margin-right: 5px; /* Ajusta el margen derecho para los botones */
     }
+
 }
+
+
+
+
+/*
+
+---------------------
+
+LISTADO EMPLEADOS
+
+---------------------
+
+
+*/
+
+.tituloEmpleados {
+  margin-top: 40px;
+  display: block; /* Asegura que el título se muestre como un bloque */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  text-align: left; /* Centra el texto, si es deseado */
+  overflow: hidden; /* Previene que el texto se desborde */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+.rounded-box {
+  border-radius: 15px; /* Preserva los bordes redondeados */
+  overflow: hidden; /* Oculta el desbordamiento para mantener visibles los bordes redondeados */
+}
+.rounded-box-inner {
+  max-height: calc(100vh - 100px); /* Ajusta este valor según sea necesario */
+  overflow-y: auto; /* Permite el desplazamiento dentro de este contenedor */
+  padding: 20px; /* Asegura que el contenido no toque los bordes */
+}
+
+
+.input-group {
+  display: flex;
+  align-items: center; /* Esta propiedad ya asegura la alineación vertical, pero revisemos el padding y margin */
+  justify-content: start; /* Alinea el input y el botón al inicio del contenedor */
+  gap: 10px; /* Espacio entre el input y el botón */
+  width: 100%; /* Asegura que el grupo de entrada utilice todo el ancho disponible */
+}
+
+.form-search {
+  flex-grow: 1;
+  max-width: 50%; /* Limita el ancho del input a la mitad del contenedor */
+  margin: 0; /* Asegúrate de que no haya margen extra */
+  padding: 0.375rem 0.75rem; /* Ajusta el relleno para igualarlo con el botón */
+}
+
+.btn-search {
+  background-color:#e7f0fa;
+  color: black;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 20px; 
+  
+
+}
+
+.btn-newUser{
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 20px; 
+  background-color: #0b5394;
+  color: white;
+}
+
+
+.table-responsive {
+  border-radius: 5px;
+  overflow: hidden;
+}
+.table thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+.table tbody tr {
+  transition: background-color 0.15s ease-in-out;
+}
+.table tbody tr:hover {
+  background-color: #e7f0fa;
+}
+
+.table th, .table td, thead th {
+  padding: 8px; /* Reduce el relleno para disminuir la altura de las filas */
+  vertical-align: middle; /* Centra el contenido verticalmente */
+  text-align: left; /* Alinea el texto a la izquierda, ajusta según necesites */
+}
+
+.sortable i {
+  font-size: 0.8rem; /* Ajusta el tamaño de los íconos */
+  color: #0b5394; /* Color de los íconos */
+  cursor: pointer; /* Cambia el cursor para indicar que son clicables */
+}
+
+/* Opcional: Ocultar uno de los íconos por defecto y cambiarlo con JavaScript al hacer clic */
+.sortable .bi-arrow-up {
+  display: none;
+}
+
+/* Estilos para la sección de paginación ajustados */
+.pagination-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2px; /* Espacio sobre la sección de paginación */
+}
+
+.pagination-section button {
+  margin: 5 5px; /* Espacio reducido entre los botones y el número de página */
+  cursor: pointer; /* Indica que los botones son clicables */
+  font-size: 0.9rem; /* Tamaño de fuente más pequeño para los botones */
+  border-radius: 5px; /* Bordes redondeados para un aspecto más suave */
+  line-height: 2; /* Ajuste de la altura de línea para alinear el texto verticalmente */
+}
+
+.btn-left {
+  border-color: #dee2e6;
+  color: #ced4da;
+  margin-right: 20px; /* Espacio adicional a la derecha del botón de página anterior */
+}
+
+.btn-right {
+  border-color: #dee2e6;
+  color: #ced4da;
+  margin-left: 20px; /* Espacio adicional a la izquierda del botón de página siguiente */
+}
+
+.fa-arrow-right, .fa-arrow-left{
+  padding: 2px;
+  align-items: center;
+}
+ 
+
+.page-number {
+  display: flex;
+  margin-right: 10px;
+  padding: 10px;
+  padding-left: 20px;
+  border-color: #dee2e6;
+  padding-right: 20px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-selected {
+  display: flex;
+  margin-right: 10px;
+  padding: 10px;
+  padding-left: 20px;
+  border-color: #dee2e6;
+  padding-right: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b5394;
+  font-weight: bolder;
+  color: white;
+}
+
+.page-number:hover, .page-number:focus {
+  background-color: #0b5394;
+  font-weight: bolder;
+  color: white; /* Cambia el color de fondo al pasar el ratón para indicar interactividad */
+}
+
+/* Estilo para el número de página activo */
+.page-number.active {
+  background-color: #495057;
+  color: white;
+}
+
+
+/*
+---------------------
+
+LOGIN
+
+---------------------
+
+*/
+
+.body_login {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #EBF5FB; /* Color de fondo azul claro */
+}
+
+.img-logo-login {
+  max-width: 120px; 
+}
+
+
+
+.top-right-image {
+  position: fixed; /* Posición fija en la pantalla */
+  top: 20px;    /* 10px desde la parte superior de la pantalla */
+  right: 50px;  /* 10px desde la parte derecha de la pantalla */
+  max-width: 100px; /* Ajusta esto según el tamaño deseado de tu imagen */
+  max-height: 100px; /* Ajusta esto según el tamaño deseado de tu imagen */
+}
+
+.login-container {
+  background: #fff;
+  padding: 45px 20px;
+  border-radius: 15px;
+  width: 500px; 
+  text-align: center;
+  box-shadow: 0px 0px 8px 0px #12243b;
+}
+
+.login-container p {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 18px; /* Cambia el tamaño de la fuente a 18px, ajusta según tus necesidades */
+  color: #12243b;
+}
+
+.login-form {
+  margin-bottom: 10px;
+}
+.login-form input {
+  width: calc(100% - 22px); /* Ajuste de ancho para tener en cuenta el padding y los bordes */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.login-form button {
+  margin-top: 20px;
+  padding: 10px 20px; /* Añade un padding horizontal para que el botón no esté justo contra el texto */
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  display: inline-block; /* Cambia a inline-block para que el botón se ajuste al contenido */
+  /* Quita el ancho del 100% para que el botón se ajuste al contenido */
+}
+
+.login-form-seccion {
+  margin-bottom: 15px; /* Reducción para evitar scroll */
+}
+
+.login-form-seccion label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 16px; /* Reducción para adaptabilidad */
+  color: #495057;
+  text-align: left;
+  padding-left: 12px;
+}
+
+/* Añade esto para centrar el botón dentro del formulario */
+.login-form {
+  text-align: center; /* Centra los elementos inline o inline-block */
+}
+
+.login-form button:hover {
+  background-color: #0056b3;
+}
+.footer-links {
+  position: absolute;
+  bottom: 20px;
+  left: 50px; /* Alineación a la izquierda */
+  width: auto;
+}
+.footer-links a {
+  text-decoration: none;
+  color: #007bff;
+  margin-right: 15px; /* Espaciado entre enlaces */
+}
+.error-message {
+  color: red;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.presential-link {
+  position: fixed; /* Posición fija en la pantalla */
+  bottom: 20px;   /* 10px desde la parte inferior de la pantalla */
+  right: 50px;    /* 10px desde la parte derecha de la pantalla */
+  background-color: black; /* Fondo negro */
+  color: white; /* Texto en blanco */
+  padding: 5px 10px; /* Un poco de relleno alrededor del texto */
+  text-decoration: none; /* Opcional: quitar el subrayado del enlace */
+  border-radius: 5px; /* Opcional: bordes redondeados */
+  font-size: 16px; /* Tamaño del texto, ajustable a tus necesidades */
+}
+
+
+header{
+  max-height: 70px;
+
+}
+
+.img-nav{
+  max-width: 50px;
+  margin: 10px;
+}
+

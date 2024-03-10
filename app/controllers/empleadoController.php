@@ -11,8 +11,9 @@ class empleadoController extends EmpleadoModel {
         $this->emp = new EmpleadoModel();
     }
 
-    public function mostrarEmpleados(){
-        return $this->emp->get_empleados();
+    public function mostrarEmpleados($pagina){
+        return $this->emp->get_empleados($pagina);
+
     }
 
     public function mostrarEmpleado($id_emp){
@@ -68,6 +69,9 @@ class empleadoController extends EmpleadoModel {
         header("Location: ".APP_URL."empleados/");
     }
 
+    public function getTotalEmpleados(){
+        return $this->emp->getTotalEmpleados();
+    }
 
 }
 

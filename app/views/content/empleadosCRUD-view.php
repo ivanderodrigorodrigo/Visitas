@@ -1,25 +1,21 @@
 <?php 
     use app\controllers\empleadoController;
     use app\controllers\SeguridadController;
+    use app\controllers\globalController;
+
     $emp = new empleadoController();
     $seg = new SeguridadController();
+    $global = new globalController();
 
     $details = false;
     $empleado = null;
 
-    // Obtener la URL completa
-    $url_completa = $_SERVER['REQUEST_URI'];
-    // Parsear la URL para obtener sus componentes
-    $url_componentes = parse_url($url_completa);
-
-    if (isset($url_componentes['query'])){
-        //Parsear la cadena de consulta para obtener los parámetros
-        parse_str($url_componentes['query'], $parametros);
-        $id_emp = $parametros["id_emp"];
+    $id_emp = $global->getid("id_emp");
+    if (isset($id_emp)){
         $empleado = $emp->mostrarEmpleado($id_emp);
         $details = true;
-
     }
+
 ?>
 
 <form class="col-md-10" method="post" action="<?php echo  $details ? $emp->modificarEmpleado() : $emp->insertarEmpleado(); ?> ">
