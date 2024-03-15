@@ -6,11 +6,9 @@ use app\controllers\viewsController;
 class authenticate extends EmpleadoModel {
 
     private $emp;
-    private $views;
 
     public function __construct(){
         $this->emp = new EmpleadoModel();
-        $this->views = new viewsController();
     }
 
     public function verificarUser(){
@@ -21,11 +19,8 @@ class authenticate extends EmpleadoModel {
             if ($this->emp->getEmpleadoLogin($email,$password)){
                 header("Location: ".APP_URL);
             } else {
-                echo '<script>';
-                echo 'alert("Acceso denegado ';
-                echo ' ';
-                echo '");';
-                echo '</script>';
+                $_SESSION['valid_user'] = 0;
+                header("Location: ".APP_URL.'login');
             }
 
         }

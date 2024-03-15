@@ -14,5 +14,5 @@
 
     <!-- Para íconos -->
 <link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/style.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="<?php echo APP_URL; ?>app/views/js/script.js" defer></script>

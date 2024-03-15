@@ -16,7 +16,7 @@ class globalController {
         if (isset($url_componentes['query'])){
             //Parsear la cadena de consulta para obtener los parámetros
             parse_str($url_componentes['query'], $parametros);
-            $ref_id = $parametros[$ref];    
+            $ref_id = isset($parametros[$ref]) ? $parametros[$ref] : null;    
         }
 
         return $ref_id;

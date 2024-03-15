@@ -63,16 +63,14 @@ class EmpleadoModel {
 
     public function getEmpleadoLogin($email, $pass){
 
-
         $consulta = $this->db->query("SELECT * FROM empleados WHERE email_emp = '{$email}' AND contrasenya_emp = '{$pass}';");
         
         if($consulta->num_rows > 0){
             $emp = mysqli_fetch_array($consulta);
             $_SESSION['id']=$emp["id_emp"];
-			      $_SESSION['user_name']=$emp["nombre_emp"];
-			      $_SESSION['user_surname']=$emp["apellido_emp"];
+            $_SESSION['user_name']=$emp["nombre_emp"];
+            $_SESSION['user_surname']=$emp["apellido_emp"];
             $_SESSION['user_rol']=$emp["rol_id"];
-
             return true;
         }
 
@@ -82,6 +80,29 @@ class EmpleadoModel {
     public function getTotalEmpleados(){
         
         $consulta = $this->db->query("SELECT COUNT(id_emp) as TOTAL FROM EMPLEADOS;");
+        
+        if($consulta->num_rows > 0){
+            $emp = mysqli_fetch_array($consulta);
+            return $emp["TOTAL"];
+            return true;
+        }
+
+        return 0;
+    }
+
+    public function buscarEmpleados($nombre, $pagina) {
+        $pagina = ($pagina - 1) * $this->filas;
+
+        $consulta = $this->db->query("SELECT * FROM empleados AS e INNER JOIN roles r ON e.rol_id = r.id_rol WHERE nombre_emp LIKE '%{$nombre}%' or apellido_emp LIKE '%{$nombre}%' LIMIT {$pagina}, {$this->filas};");
+        while($fila = $consulta->fetch_assoc()){
+            $this->empleados[] = $fila;
+        }
+        return $this->empleados;
+    }
+
+    public function getTotalEmpleadosSearch($nombre){
+        
+        $consulta = $this->db->query("SELECT COUNT(id_emp) as TOTAL FROM EMPLEADOS WHERE nombre_emp LIKE '%{$nombre}%' or apellido_emp LIKE '%{$nombre}%';");
         
         if($consulta->num_rows > 0){
             $emp = mysqli_fetch_array($consulta);

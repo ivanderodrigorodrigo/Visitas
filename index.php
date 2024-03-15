@@ -27,13 +27,31 @@
         use app\controllers\viewsController;
         $viewsController= new viewsController();
         $vista=$viewsController->obtenerVistasControlador($url[0]);
-        if($url[0]=="login" || $vista=="404"){
+        switch($url[0])
+        {
+            case "logout":
+                require_once "./app/includes/session_close.php";
+                break;
+            case "login":
+            case "empleadosSearch":
+                require_once $vista;
+                break;
+            default:
+
+
+
+
+        
+
+
+
+        /*if($url[0]=="login" || $vista=="404"){
             require_once $vista;
         } elseif ($vista == "logout"){
             require_once "./app/includes/session_close.php";
-        }else{
+        }else{*/
     ?>    
-    <main class="container-fluid d-flex flex-column">
+    <main class=" d-flex flex-column">
         <header>
         <?php 
             require_once "./app/views/global/header.php";
@@ -44,6 +62,7 @@
 
             require_once "./app/views/global/nav.php";
             require_once $vista;
+            break;
         }
         ?>
 
