@@ -1,43 +1,55 @@
 <?php
 	
 	namespace app\models;
-	
+	use app\controllers\SeguridadController;
+use app\controllers\viewsController;
 
 	class viewsModel{
 
 		private $navs;
 		private $subnavs;
-		private $vistas;
+		private $vista;
 		private $home;
 		private $db;
+		private $segController;
 
 		public function __construct(){
 			include './app/includes/database.php';
 			$this->navs = array();
-			$this->vistas = array();
+			$this->vista = array();
 			$this->home = array();
 			$this->db = $conn;
+			$this->segController = new SeguridadController();
 		}
 
 		/*---------- Modelo obtener vista ----------*/
 		protected function obtenerVistasModelo($vista){
-			$consulta = $this->db->query("SELECT url_modulo FROM modulos WHERE url_modulo <> '';");
+
+			$consulta = $this->db->query("SELECT * FROM modulos WHERE url_modulo = '{$vista}';");
         
-			while($fila = $consulta->fetch_assoc()){
-				
-				$this->vistas[] = $fila['url_modulo'];
-			}
+			$this->vista = $consulta->fetch_assoc();
+
 			mysqli_free_result($consulta);
 
-			if(in_array($vista, $this->vistas)){
-				if(is_file("./app/views/content/".$vista."-view.php")){
+			if(isset($this->vista)){
+
+				if ($this->segController->VerificarPermisosModuloRol($this->vista['id_modulo'])){
+
+					if(is_file("./app/views/content/".$vista."-view.php")){
 					$contenido="./app/views/content/".$vista."-view.php";
 					$_SESSION['view_current'] = $vista;
-				}else{
-					$contenido="404";
+					}else{
+						$contenido="404";
+					}
+				} else {
+					$_SESSION['view_current']='403';
+					$contenido="./app/views/content/403-view.php";
 				}
+
+
 			}elseif($vista=="logout"){
-				$contenido="logout";
+				$_SESSION['view_current']='logout';
+				$contenido="./app/includes/session_close.php";
 			}else{
 				$contenido="404";
 			}

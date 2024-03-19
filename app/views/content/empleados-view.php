@@ -2,9 +2,16 @@
 
 use app\controllers\empleadoController;
 use app\controllers\globalController;
+use app\controllers\RolesyPermisosController;
 
 $emp = new empleadoController();
 $global = new globalController();
+$perm_rol = new RolesyPermisosController();
+
+//Mostrar los permisos que tiene el usuario
+$permisos = $perm_rol->mostrarPermisosPorRol($_SESSION['user_rol']);
+$nombrePermisosActuales = array_column($permisos, 'nombre_permiso');
+$registrar = array_search('Registrar empleados',$nombrePermisosActuales);
 
 // Obtener el número total de empleados de la BBDD
 $total_empleados = $emp->getTotalEmpleados();
@@ -32,7 +39,9 @@ $_SESSION['filtro'] = isset($filtro) ? $filtro : '';
                 value="<?php echo $_SESSION['filtro'] ?>" 
                 >
                 <div class="newUser">
-                    <button id="anyadirEmpleado" class="btn btn-newUser" onclick="window.location='<?php echo APP_URL; ?>empleadosCRUD'">Agregar Usuario</button>
+                    <button id="anyadirEmpleado" class="btn btn-newUser" onclick="window.location='<?php echo APP_URL; ?>empleadosCRUD'"
+                    <?php echo !$registrar ? 'style="display: none;" disabled' : ''; ?>
+                    >Agregar Usuario</button>
                 </div>
             </div>
         </div>

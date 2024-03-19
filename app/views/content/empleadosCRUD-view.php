@@ -2,10 +2,18 @@
     use app\controllers\empleadoController;
     use app\controllers\SeguridadController;
     use app\controllers\globalController;
+    use app\controllers\RolesyPermisosController;
 
     $emp = new empleadoController();
     $seg = new SeguridadController();
     $global = new globalController();
+    $perm_rol = new RolesyPermisosController();
+
+    //Mostrar los permisos que tiene el usuario
+    $permisos = $perm_rol->mostrarPermisosPorRol($_SESSION['user_rol']);
+    $nombrePermisosActuales = array_column($permisos, 'nombre_permiso');
+    $editar = array_search('Edicion Empleados',$nombrePermisosActuales);
+    $eliminar = array_search('Eliminar empleados',$nombrePermisosActuales);
 
     $details = false;
     $empleado = null;
@@ -129,15 +137,18 @@
                 <button type="submit" class="btn btn-accept" <?php echo $details ? 'disabled' : ''; ?>>Registrar</button>
             <?php endif; ?>
             <?php if (($details)) : ?>
-                <button type="button" id="btn_edicion" class="btn btn-modify" onclick="activarEdicion();">Editar</button>
+                <button type="button" id="btn_edicion" class="btn btn-modify" <?php echo !$editar ? 'style="display: none;" disabled' : ''; ?>
+                 onclick="activarEdicion();">Editar</button>
                 <button type="submit" id="btn_save" class="btn btn-accept" style="display: none;" disabled>Guardar</button>
             <?php endif; ?>
         </div>
         
         <div>
-            <button type="button" class="btn btn-cancel" onclick="goBack()">Cancelar</button>
+            <button type="button" class="btn btn-cancel" onclick="goBack()">Volver</button>
             <?php if (($details)) : ?>
-                <button type="submit" onclick="eliminar()" class="btn btn-delete" >Dar de baja</button>
+                <button type="submit" onclick="eliminar()" class="btn btn-delete" 
+                <?php echo !$eliminar ? 'style="display: none;" disabled' : ''; ?>
+                >Dar de baja</button>
             <?php endif; ?>
             
         </div>

@@ -32,18 +32,16 @@
         use app\controllers\viewsController;
         $viewsController= new viewsController();
         $vista=$viewsController->obtenerVistasControlador($url[0]);
-        switch($url[0])
+        switch($_SESSION['view_current'])
         {
             //PAGINAS QUE NO UTILIZAN EL HEADER Y NAV
             case "logout":
-                require_once "./app/includes/session_close.php";
-                break;
             case "login":
             case "changePassword":
             case "empleadosSearch":
+            case "403":
                 require_once $vista;
                 break;
-                
             //RESTO DE PAGINAS UTILIZAN EL HEADER Y NAV
             default:
 

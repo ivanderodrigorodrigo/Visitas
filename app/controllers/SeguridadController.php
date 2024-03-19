@@ -15,6 +15,24 @@ class SeguridadController extends SeguridadModel {
         return $this->seg->get_Roles();
     }
 
+    
+    public function VerificarPermisosModuloRol($modulo){
+
+        if(isset($_SESSION['user_rol'])){
+
+            $permiso = $this->seg->PermisosModuloRol($modulo,$_SESSION['user_rol']);
+            if (isset($permiso)){
+                return true;
+            }
+            return false;
+        } else {
+            //No se ha iniciado sesión, solo tiene acceso a LOGIN o CHANGEPASSWORD
+            return true;
+        }
+
+        
+    }
+
 
 }
 
