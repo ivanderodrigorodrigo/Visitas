@@ -11,8 +11,8 @@ class empleadoController extends EmpleadoModel {
         $this->emp = new EmpleadoModel();
     }
 
-    public function mostrarEmpleados($pagina){
-        return $this->emp->get_empleados($pagina);
+    public function mostrarEmpleados($pagina,$sort,$order){
+        return $this->emp->get_empleados($pagina,$sort,$order);
 
     }
 

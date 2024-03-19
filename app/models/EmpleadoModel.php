@@ -18,10 +18,37 @@ class EmpleadoModel {
         $this->filas = FILAS_TABLA;
     }
 
+    public function campoOrdenado ($sort){
+        $campo = '';
+        switch ($sort){
+            CASE 1:
+                $campo = 'nombre_emp';
+                break;
+            CASE 2:
+                $campo = 'apellido_emp';
+                break;
+            CASE 3:
+                $campo = 'dni_emp';
+                break;
+            CASE 4:
+                $campo = 'nombre_rol';
+                break;
+            CASE 5:
+                $campo = 'activo_emp';
+                break;
+            default:
+                $campo = 'id_emp';
+                break;  
+        }
 
-    public function get_empleados($pagina){
+        return $campo;
+    }
+
+
+    public function get_empleados($pagina,$sort,$order){
         $pagina = ($pagina - 1) * $this->filas;
-        $consulta = $this->db->query("SELECT * FROM empleados AS e INNER JOIN roles r ON e.rol_id = r.id_rol LIMIT {$pagina}, {$this->filas};");
+        $sort = $this->campoOrdenado($sort);
+        $consulta = $this->db->query("SELECT * FROM empleados AS e INNER JOIN roles r ON e.rol_id = r.id_rol ORDER BY {$sort} {$order} LIMIT {$pagina}, {$this->filas};");
       
         while($fila = $consulta->fetch_assoc()){
             $this->empleados[] = $fila;

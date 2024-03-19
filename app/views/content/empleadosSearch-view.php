@@ -6,32 +6,49 @@ use app\controllers\globalController;
 $emp = new empleadoController();
 $global = new globalController();
 
+$sort = $global->getid("sort");
+$order = $global->getid("order");
+$_SESSION['sort'] = $sort ?? $_SESSION['sort'] ?? 0;
+$_SESSION['order'] = $order ?? $_SESSION['order'] ?? 'ASC';
+
 if (isset($_POST['nombre']) or $_SESSION['filtro'] <> ''){
 
     $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : $_SESSION['filtro'];
     $empleados = $emp->buscarEmpleados($nombre,$_SESSION['page']);
+
     //Obtener el número total de empleados de la BBDD
     $total_empleados = $emp->getTotalEmpleadosSearch($nombre);
 
     //Obtener la cantida de páginas necesarias para mostrar todos los datos
     $total_paginas = ceil($total_empleados / FILAS_TABLA);
 } else {
-    $empleados = $emp->mostrarEmpleados($_SESSION['page']);
+    $empleados = $emp->mostrarEmpleados($_SESSION['page'],$_SESSION['sort'],$_SESSION['order']);
 }
 
 // Obtener la página que vamos a mostrar en la tabla
 $page = $global->getid("pagina");
 $_SESSION['page'] = isset($page) ? $page : 1;
+
 ?>
 
     <table id="employeesTable" class="table">
         <thead>
             <tr>
-                <th class="sortable" data-column="1" data-type="string">Nombre <i class="bi bi-funnel"></i></th>
-                <th class="sortable" data-column="2" data-type="string">Apellido <i class="bi bi-funnel"></i></th>
-                <th class="sortable" data-column="3" data-type="string">DNI <i class="bi bi-funnel"></i></th>
-                <th class="sortable" data-column="4" data-type="string">Tipo <i class="bi bi-funnel"></i></th>
-                <th class="sortable" data-column="5" data-type="string">Estado <i class="bi bi-funnel"></i></th>
+                <th class="sortable" data-column="1" data-type="string">Nombre 
+                    <i class="<?php if ($_SESSION['sort'] == 1) { echo $_SESSION['order'] == 'ASC' ? 'bi bi-sort-up' : 'bi bi-sort-down';} 
+                    else { echo 'bi bi-funnel';} ?> bi bi-funnel"></i></th>
+                <th class="sortable" data-column="2" data-type="string">Apellido 
+                    <i class="<?php if ($_SESSION['sort'] == 2) { echo $_SESSION['order'] == 'ASC' ? 'bi bi-sort-up' : 'bi bi-sort-down';} 
+                    else { echo 'bi bi-funnel';} ?> bi bi-funnel"></i></th>
+                <th class="sortable" data-column="3" data-type="string">DNI 
+                    <i class="<?php if ($_SESSION['sort'] == 3) { echo $_SESSION['order'] == 'ASC' ? 'bi bi-sort-up' : 'bi bi-sort-down';} 
+                    else { echo 'bi bi-funnel';} ?> bi bi-funnel"></i></th>
+                <th class="sortable" data-column="4" data-type="string">Tipo 
+                    <i class="<?php if ($_SESSION['sort'] == 4) { echo $_SESSION['order'] == 'ASC' ? 'bi bi-sort-up' : 'bi bi-sort-down';} 
+                    else { echo 'bi bi-funnel';} ?> bi bi-funnel"></i></th>
+                <th class="sortable" data-column="5" data-type="string">Estado 
+                    <i class="<?php if ($_SESSION['sort'] == 5) { echo $_SESSION['order'] == 'ASC' ? 'bi bi-sort-up' : 'bi bi-sort-down';} 
+                    else { echo 'bi bi-funnel';} ?> bi bi-funnel"></i></th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -65,3 +82,27 @@ $_SESSION['page'] = isset($page) ? $page : 1;
         <i class="fas fa-arrow-right"></i>
     </button>
 </div>   
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const sortableColumns = document.querySelectorAll('.sortable');
+
+        sortableColumns.forEach(column => {
+            column.addEventListener('click', () => {
+                const columnNumber = column.getAttribute('data-column');
+                var order = 'ASC';
+
+                var session_sort = "<?php echo $_SESSION['sort']; ?>";
+                var session_order = "<?php echo $_SESSION['order']; ?>";
+
+                if (columnNumber == session_sort){
+                    order = session_order == 'ASC' ? 'DESC' : 'ASC';
+                }
+
+                const url = "<?php echo APP_URL; ?>empleados?pagina=<?php echo $_SESSION['page']; ?>";
+                
+                window.location = `${url}&sort=${columnNumber}&order=${order}`;
+            });
+        });
+    });
+</script>
