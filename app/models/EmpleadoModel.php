@@ -61,20 +61,10 @@ class EmpleadoModel {
         return $this->estados;
     }
 
-    public function getEmpleadoLogin($email, $pass){
-
-        $consulta = $this->db->query("SELECT * FROM empleados WHERE email_emp = '{$email}' AND contrasenya_emp = '{$pass}';");
-        
-        if($consulta->num_rows > 0){
-            $emp = mysqli_fetch_array($consulta);
-            $_SESSION['id']=$emp["id_emp"];
-            $_SESSION['user_name']=$emp["nombre_emp"];
-            $_SESSION['user_surname']=$emp["apellido_emp"];
-            $_SESSION['user_rol']=$emp["rol_id"];
-            return true;
-        }
-
-        return false;
+    public function getEmpledoByEmail($email){
+        $consulta = $this->db->query("SELECT * FROM empleados WHERE email_emp = '{$email}' and activo_emp = 'S';");
+        $resultado = $consulta->fetch_assoc();
+        return $resultado;
     }
 
     public function getTotalEmpleados(){
@@ -113,6 +103,13 @@ class EmpleadoModel {
         return 0;
     }
 
+    public function updatePassword($id_emp, $password){
+        $this->db->query("UPDATE empleados SET contrasenya_emp = '{$password}' WHERE id_emp={$id_emp};");
+        if ($this->db->affected_rows == 1){
+            return true;  
+        }
+        return false;
+    }
 
 }
 ?>

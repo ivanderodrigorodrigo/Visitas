@@ -66,7 +66,7 @@ class empleadoController extends EmpleadoModel {
      }
 
     public function mostrarEmpleadoView(){
-        header("Location: ".APP_URL."empleados/");
+        header("Location: empleados/");
     }
 
     public function getTotalEmpleados(){
