@@ -29,10 +29,9 @@ class empleadoController extends EmpleadoModel {
             $email_emp = $_POST['email_emp'];  
             $rol_id = $_POST['rol_emp'];
             $rol_id = $_POST['rol_emp'];
-            $estado_id = $_POST['estado_emp'];
             $activo_emp = 'S';
 
-            $this->emp->insertar($dni_emp, $nombre_emp, $apellido_emp, $email_emp, null, $rol_id, $activo_emp, $estado_id);
+            $this->emp->insertar($dni_emp, $nombre_emp, $apellido_emp, $email_emp, null, $rol_id, $activo_emp);
             $this->mostrarEmpleadoView();
         }
     }
@@ -46,10 +45,9 @@ class empleadoController extends EmpleadoModel {
             $apellido_emp = $_POST['apellido_emp'];
             $email_emp = $_POST['email_emp'];    
             $rol_id = $_POST['rol_emp'];
-            $estado_id = $_POST['estado_emp'];
             $activo_emp = $_POST['activo_emp'];
 
-            $this->emp->modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id, $estado_id, $activo_emp);
+            $this->emp->modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id, $activo_emp);
             $this->mostrarEmpleadoView();
 
         }
@@ -59,11 +57,6 @@ class empleadoController extends EmpleadoModel {
         $this->emp->eliminar($id_emp);
         $this->mostrarEmpleadoView();
     }
-
-
-    public function getEstados(){
-        return $this->emp->getEstados();
-     }
 
     public function mostrarEmpleadoView(){
         header("Location: empleados/");

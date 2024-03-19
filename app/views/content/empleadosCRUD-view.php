@@ -109,15 +109,15 @@
             </select>
         </div>
         <div class="col mr-0">
-            <label for="estado_emp">Estado</label>
-            <select id="estado_emp" name="estado_emp" class="form-control" <?php echo $details ? 'disabled' : ''; ?>>
-                <option value=""></option>
-                <?php foreach ($emp->getEstados() as $estado) : ?>
-                    <option value="<?php echo $estado['id_estado']; ?>" <?php echo ($details && $estado['id_estado'] == $empleado['estado_id']) ? 'selected' : ''; ?>>
-                        <?php echo $estado['nombre_estado']; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+            <label for="activo_emp">Estado</label>
+            <input
+            type="text"
+            id="activo_emp"
+            name="activo_emp"
+            class="form-control"
+            value="<?php echo $details ? $empleado['activo_emp'] = 'S' ? 'Usuario activo' : 'Usuario dado de baja' : ''; ?>"
+            readonly
+            />
         </div>
     </div>
     <!-- Botones -->
@@ -136,7 +136,10 @@
         
         <div>
             <button type="button" class="btn btn-cancel" onclick="goBack()">Cancelar</button>
-            <button type="submit" onclick="eliminar()" class="btn btn-delete" >Eliminar</button>
+            <?php if (($details)) : ?>
+                <button type="submit" onclick="eliminar()" class="btn btn-delete" >Dar de baja</button>
+            <?php endif; ?>
+            
         </div>
     </div>
 </div>
@@ -171,7 +174,6 @@
         var inputApellidos = document.getElementById('apellido_emp');
         var inputEmail = document.getElementById('email_emp');
         var inputRol = document.getElementById('rol_emp');
-        var inputEstado = document.getElementById('estado_emp');
         var btn_edicion = document.getElementById('btn_edicion');
         var btn_save = document.getElementById('btn_save');
 
@@ -180,7 +182,6 @@
         inputApellidos.removeAttribute("readonly");
         inputEmail.removeAttribute("readonly");
         inputRol.removeAttribute("disabled");
-        inputEstado.removeAttribute("disabled");
         btn_save.removeAttribute("disabled");
         btn_save.style.display = 'inline-block';
         btn_edicion.setAttribute('disabled','');
