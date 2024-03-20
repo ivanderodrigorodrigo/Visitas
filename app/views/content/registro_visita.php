@@ -1,17 +1,45 @@
 <?php
+// Incluir archivo de configuración de la base de datos o código de conexión aquí
+// Asumiendo que ya tienes un archivo de configuración o conexión PDO
+// Por ejemplo, incluyendo un archivo con una variable $pdo para la conexión PDO
+// include 'configuracionBaseDatos.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Asumiendo que tienes una función para conectar y guardar en la base de datos.
-    // Aquí deberías sanear y validar los datos de entrada antes de guardarlos.
-    $nombre = $_POST['nombre'];
-    $fechaEntrada = $_POST['fechaEntrada'];
-    $fechaSalida = $_POST['fechaSalida'];
-    $motivo = $_POST['motivo'];
+    // Sanitizar y validar los datos de entrada
+    $nombre = filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_STRING);
+    $fechaEntrada = filter_input(INPUT_POST, 'fechaEntrada', FILTER_SANITIZE_STRING);
+    $fechaSalida = filter_input(INPUT_POST, 'fechaSalida', FILTER_SANITIZE_STRING);
+    $motivo = filter_input(INPUT_POST, 'motivo', FILTER_SANITIZE_STRING);
 
-    // Aquí iría la lógica para guardar los datos en la base de datos.
-    // Por ejemplo: guardarVisita($nombre, $fechaEntrada, $fechaSalida, $motivo);
+    // Llamar a la función para guardar los datos en la base de datos
+    if (guardarVisita($nombre, $fechaEntrada, $fechaSalida, $motivo)) {
+        echo "Visita registrada con éxito.";
+    } else {
+        echo "Error al registrar la visita.";
+    }
+}
 
-    echo "Visita registrada con éxito."; // Mensaje simple por ahora
-    // En una aplicación real, podrías redirigir al usuario o mostrar un mensaje de éxito más elaborado.
+/**
+ * Guarda los detalles de la visita en la base de datos.
+ *
+ * @param string $nombre Nombre del visitante.
+ * @param string $fechaEntrada Fecha y hora de entrada.
+ * @param string $fechaSalida Fecha y hora de salida.
+ * @param string $motivo Motivo de la visita.
+ * @return bool Retorna true si la operación fue exitosa, de lo contrario false.
+ */
+function guardarVisita($nombre, $fechaEntrada, $fechaSalida, $motivo) {
+    global $pdo; // Asegúrate de que esta variable contiene tu conexión PDO
+
+    $sql = "INSERT INTO visitas (nombre, fecha_entrada, fecha_salida, motivo) VALUES (:nombre, :fechaEntrada, :fechaSalida, :motivo)";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindParam(':nombre', $nombre);
+    $stmt->bindParam(':fechaEntrada', $fechaEntrada);
+    $stmt->bindParam(':fechaSalida', $fechaSalida);
+    $stmt->bindParam(':motivo', $motivo);
+
+    return $stmt->execute();
 }
 ?>
 
