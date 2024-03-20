@@ -1,6 +1,9 @@
 <?php
 
 namespace app\models;
+
+use Exception;
+
 if(file_exists(__DIR__."/../../config/app.php")){
     require_once __DIR__."/../../config/app.php";
 }
@@ -63,9 +66,17 @@ class EmpleadoModel {
         return $resultado;
     }
 
-    public function insertar($dni_emp, $nombre_emp, $apellido_emp, $email_emp, $contrasenya_emp, $rol_id, $activo_emp){
-        $resultado = $this->db->query("INSERT INTO empleados (dni_emp, nombre_emp, apellido_emp, email_emp, contrasenya_emp, rol_id, activo_emp) VALUES ('{$dni_emp}', '{$nombre_emp}', '{$apellido_emp}', '{$email_emp}', '{$contrasenya_emp}', {$rol_id}, '{$activo_emp}';");
-        return $resultado;
+    public function insertar($dni_emp, $nombre_emp, $apellido_emp, $email_emp, $contrasenya_emp, $rol_id, $activo_emp) {
+        try {
+            $query = "INSERT INTO empleados (dni_emp, nombre_emp, apellido_emp, email_emp, contrasenya_emp, rol_id, activo_emp) VALUES ('{$dni_emp}', '{$nombre_emp}', '{$apellido_emp}', '{$email_emp}', '{$contrasenya_emp}', {$rol_id}, '{$activo_emp}')";
+            if (!$this->db->query($query)) {
+                throw new Exception("Error al ejecutar la consulta de inserción: " . $this->db->error);
+            }
+            return $this->db->insert_id;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage() . $this->db->error;
+            return false; 
+        }
     }
 
     public function modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id,$activo_emp){

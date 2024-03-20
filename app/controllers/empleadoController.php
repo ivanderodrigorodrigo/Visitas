@@ -31,8 +31,8 @@ class empleadoController extends EmpleadoModel {
             $rol_id = $_POST['rol_emp'];
             $activo_emp = 'S';
 
-            $this->emp->insertar($dni_emp, $nombre_emp, $apellido_emp, $email_emp, null, $rol_id, $activo_emp);
-            $this->mostrarEmpleadoView();
+            $id_emp = $this->emp->insertar($dni_emp, $nombre_emp, $apellido_emp, $email_emp, null, $rol_id, $activo_emp);
+            $this->recargarDetalles($id_emp);
         }
     }
 
@@ -48,24 +48,22 @@ class empleadoController extends EmpleadoModel {
             $activo_emp = $_POST['activo_emp'];
 
             $this->emp->modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id, $activo_emp);
-            $this->mostrarEmpleadoView();
-
+            $this->recargarDetalles($id_emp);
         }
     }
 
     public function eliminarEmpleado($id_emp){
         $this->emp->eliminar($id_emp);
-        $this->mostrarEmpleadoView();
+        $this->recargarDetalles($id_emp);
     }
 
-    public function mostrarEmpleadoView(){
-        header("Location: empleados/");
+    public function recargarDetalles($id_emp){
+        header("Location: empleadosCRUD?id_emp={$id_emp}");
     }
 
     public function getTotalEmpleados(){
         return $this->emp->getTotalEmpleados();
     }
-
 
     public function buscarEmpleados($nombre, $pagina) {
         return $this->emp->buscarEmpleados($nombre, $pagina);

@@ -34,7 +34,7 @@ $auth = new authenticate();
 		    ?>
         <button type="submit">Iniciar Sesión</button>
         </form>
-        <a href="changePassword">Recuperar contraseña</a>
+        <a href="<?php echo APP_URL ?>changePassword">Recuperar contraseña</a>
     </div>
         
     <a href="http://www.presentialsl.com" class="presential-link" target="_blank">PresentiaL SL</a>

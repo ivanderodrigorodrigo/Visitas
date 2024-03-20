@@ -13,7 +13,7 @@ function activarSubMenu(idsub){
     }
 }
 
-function goBack() {
-    window.history.back();
-}
+function goBack(ventana) {
+    window.location.href = ventana;
+}   
 

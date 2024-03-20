@@ -24,9 +24,21 @@
         $details = true;
     }
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['action']) && $_POST['action'] == 'Baja_empleado'){
+            echo $_POST['action'];
+            $emp->eliminarEmpleado($_POST['id_emp']);
+        }elseif (isset($_POST['action']) && $_POST['action'] == 'Actualizar_empleado'){
+            $emp->modificarEmpleado();
+        }elseif (isset($_POST['action']) && $_POST['action'] == 'Registrar_empleado'){
+            $emp->insertarEmpleado();
+        }
+    }
+
+
 ?>
 
-<form class="col-md-10" method="post" action="<?php echo  $details ? $emp->modificarEmpleado() : $emp->insertarEmpleado(); ?> ">
+<form class="col-md-10" id="formulario" method="post" action="">
     <div class="rounded-box d-flex flex-column justify-content-center">
     <!-- Título -->
     <div class="formulario-seccion">
@@ -46,7 +58,7 @@
         <?php echo $details ? 'readonly' : ''; ?>
         />
     </div>
-    <input type="hidden" id="activo_emp" name="activo_emp" value="S" style="display: none;">
+    <input type="hidden" id="action" name="action" value="" style="display: none;">
     <!-- Nombre y DNI -->
     <div class="form-row formulario-seccion">
         <div class="col">
@@ -123,31 +135,32 @@
             id="activo_emp"
             name="activo_emp"
             class="form-control"
-            value="<?php echo $details ? $empleado['activo_emp'] = 'S' ? 'Usuario activo' : 'Usuario dado de baja' : ''; ?>"
+            value="<?php echo $details ? $empleado['activo_emp'] == 'S' ? 'Usuario activo' : 'Usuario dado de baja' : ''; ?>"
             readonly
             />
         </div>
     </div>
+
     <!-- Botones -->
     <div class="form-row botones formulario-seccion">
     <div class="col">
     <div style="display: flex; justify-content: space-between;">
         <div>
             <?php if (!$details) : ?>
-                <button type="submit" class="btn btn-accept" <?php echo $details ? 'disabled' : ''; ?>>Registrar</button>
+                <button type="submit" id="btn_registrar" class="btn btn-accept" <?php echo $details ? 'disabled' : ''; ?>>Registrar</button>
             <?php endif; ?>
             <?php if (($details)) : ?>
-                <button type="button" id="btn_edicion" class="btn btn-modify" <?php echo !$editar ? 'style="display: none;" disabled' : ''; ?>
+                <button type="button" id="btn_edicion" class="btn btn-modify" <?php echo !$editar ? 'style="display: none;"' : ''; ?>
                  onclick="activarEdicion();">Editar</button>
                 <button type="submit" id="btn_save" class="btn btn-accept" style="display: none;" disabled>Guardar</button>
             <?php endif; ?>
         </div>
         
         <div>
-            <button type="button" class="btn btn-cancel" onclick="goBack()">Volver</button>
+            <button type="button" class="btn btn-cancel" onclick="goBack('Empleados')">Volver</button>
             <?php if (($details)) : ?>
-                <button type="submit" onclick="eliminar()" class="btn btn-delete" 
-                <?php echo !$eliminar ? 'style="display: none;" disabled' : ''; ?>
+                <button type="submit" id="btn_baja" class="btn btn-delete"
+                <?php echo !$eliminar ? 'style="display: none;"' : ''; ?>
                 >Dar de baja</button>
             <?php endif; ?>
             
@@ -178,6 +191,46 @@
 </form>
 
 <script>
+
+    const btnbaja = document.getElementById('btn_baja');
+    const btn_save = document.getElementById('btn_save');
+    const btn_registrar = document.getElementById('btn_registrar');
+    if (btnbaja) {
+        btnbaja.addEventListener('click', (e) => {
+            e.preventDefault()
+
+            var action = document.getElementById('action');
+            action.value = 'Baja_empleado';
+
+            document.getElementById('formulario').submit()
+
+        })
+    }
+
+    if (btn_save) {
+        btn_save.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        var action = document.getElementById('action');
+        action.value = 'Actualizar_empleado';
+
+        document.getElementById('formulario').submit()
+
+    })
+    }
+
+    if (btn_registrar) {
+        btn_registrar.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        var action = document.getElementById('action');
+        action.value = 'Registrar_empleado';
+
+        document.getElementById('formulario').submit()
+
+    })
+    }
+
     function activarEdicion() { 
         
         var inputDNI = document.getElementById('dni_emp');
@@ -199,13 +252,6 @@
         btn_edicion.style.display = 'none';
         
     }
-
-    function eliminar(){
-        var action = document.getElementById('activo_emp');
-        action.value = 'N';
-        activarEdicion();
-    }
-
 
 
 </script>

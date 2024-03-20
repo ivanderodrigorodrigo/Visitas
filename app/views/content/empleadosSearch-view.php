@@ -59,7 +59,7 @@ $_SESSION['page'] = isset($page) ? $page : 1;
                     <td><?= $empleado['apellido_emp'] ?></td>
                     <td><?= $empleado['dni_emp'] ?></td>
                     <td><?= $empleado['nombre_rol'] ?></td>
-                    <td><?= $empleado['activo_emp'] = 'S' ? 'Alta' : 'Baja' ?></td>
+                    <td><?= $empleado['activo_emp'] == 'S' ? 'Alta' : 'Baja' ?></td>
                     <td class="apartadoAccion"><label class="fas fa-edit" style="cursor:pointer;" 
                     onclick="window.location='<?php echo APP_URL; ?>empleadosCRUD?id_emp=<?php echo $empleado['id_emp'] ?>'"></label></td>
                 </tr>
