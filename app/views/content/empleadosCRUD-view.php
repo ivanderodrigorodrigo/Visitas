@@ -133,7 +133,7 @@
             id="activo_emp"
             name="activo_emp"
             class="form-control"
-            value="<?php echo $details ? $empleado['activo_emp'] == 'S' ? 'Usuario activo' : 'Usuario dado de baja' : ''; ?>"
+            value="<?php echo $details ? ($empleado['activo_emp'] == 'S' ? 'Usuario activo' : 'Usuario dado de baja') : ''; ?>"
             readonly
             />
         </div>
