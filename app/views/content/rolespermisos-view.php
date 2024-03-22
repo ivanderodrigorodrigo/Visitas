@@ -36,13 +36,11 @@ $idsPermisosActuales = array_column($permisosActuales, 'id_permiso');
         <h2>Gestión de Roles y Permisos</h2>
         <!-- Sección para añadir un nuevo rol -->
         <div class="mb-4">
-            <form method="post" action="">
-                <div class="form-group">
-                    <label for="nombre_rol">Nombre del Rol:</label>
-                    <input type="text" class="form-control" id="nombre_rol" name="nombre_rol" placeholder="Introduce el nombre del nuevo rol" required>
-                </div>
+            <form method="post" action="" class="d-flex w-100 justify-content-center align-items-center">
+                
+                <input type="text" class="input-newRol form-control " id="nombre_rol" name="nombre_rol" placeholder="Introduce el nuevo rol a crear" required>
+                <button type="submit" class="btn btn-newRol">Agregar Rol</button>
                 <input type="hidden" name="accion" value="agregar_rol">
-                <button type="submit" class="btn btn-primary">Agregar Rol</button>
             </form>
         </div>
 
@@ -76,7 +74,7 @@ $idsPermisosActuales = array_column($permisosActuales, 'id_permiso');
                         <?php endforeach; ?>
                         <input type="hidden" name="id_rol" value="<?= $id_rol_seleccionado; ?>">
                         <input type="hidden" name="accion" value="modificar_permisos">
-                        <button type="submit" class="btn btn-success">Aplicar Cambios</button>
+                        <button type="submit" class="btn btn-success" style="color: white;">Aplicar Cambios</button>
                     </form>
                 <?php else: ?>
                     <p>Seleccione un rol para ver o modificar sus permisos.</p>

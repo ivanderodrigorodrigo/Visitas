@@ -41,9 +41,7 @@
 <form class="col-md-10" id="formulario" method="post" action="">
     <div class="rounded-box d-flex flex-column justify-content-center">
     <!-- Título -->
-    <div class="formulario-seccion">
-        <h2 class="tituloEmpleados"><?php echo $details ? 'Editar Empleado' : 'Registrar Nuevo Empleado'; ?></h2>
-    </div>
+    <h2><?php echo $details ? 'Editar Empleado' : 'Registrar Nuevo Empleado'; ?></h2>
     <!-- Número de empleado por si se debe modificar. -->
     <div class="formulario-seccion">
         <input

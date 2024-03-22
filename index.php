@@ -42,26 +42,44 @@
             case "403":
                 require_once $vista;
                 break;
+            case "home": ?>    
+                <main class="d-flex flex-column">
+                    <header class="d-flex">
+                        <div class="col-10 d-flex justify-content-between align-items-center pl-5">
+                            <?php 
+                                require_once "./app/views/global/header.php";
+                            ?>
+                        </div>
+                    </header>
+                    <div class="row flex-grow-1">
+                        <?php 
+                            require_once $vista; 
+                            break; 
+                        ?>
+                    </div>
+                </main>    
+            <?php   
+
             //RESTO DE PAGINAS UTILIZAN EL HEADER Y NAV
             default:
 
             ?>    
             <main class=" d-flex flex-column">
-                <header>
-                <?php 
-                    require_once "./app/views/global/header.php";
-                ?>
-                </header>
+                        <header class="d-flex d-flex justify-content-between align-items-center w-100">
+                            <?php 
+                                require_once "./app/views/global/header.php";
+                            ?>
+                        </header>
                 <div class="row flex-grow-1">
-                <?php 
+                    <?php 
 
-                    require_once "./app/views/global/nav.php";
-                    require_once $vista;
-                    break;
-                }
-                ?>
-        </div>
-    </main>
+                        require_once "./app/views/global/nav.php";
+                        require_once $vista;
+                        break;
+                    }
+                    ?>
+                </div>
+            </main>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

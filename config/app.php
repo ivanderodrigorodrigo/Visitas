@@ -5,4 +5,4 @@
 	const APP_SESSION_NAME="VISITAS";
 
 	//Número de filas a mostrar en la tabla
-	const FILAS_TABLA = 8;
+	const FILAS_TABLA = 7;

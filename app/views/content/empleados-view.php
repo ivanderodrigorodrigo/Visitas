@@ -29,9 +29,7 @@ $_SESSION['filtro'] = isset($filtro) ? $filtro : '';
 <div class="col-md-10">
     <div class="rounded-box d-flex flex-column justify-content-center">
         <!-- Primera Fila: Título -->
-        <div class="formulario-seccion">
-            <h2 class="tituloEmpleados">Lista de Empleados</h2>
-        </div>
+        <h2>Lista de empleados</h2>
         <!-- Segunda fila: Input de búsqueda -->
         <div class="form-row formulario-seccion">
             <div class="input-group d-flex justify-content-between align-items-center mx-2">                

@@ -1,8 +1,19 @@
 
-body, .menu-lateral {
+body {
     background-color: #e7f0fa; /* Color de fondo azul claro para la página */
     padding-left: 15px;
   }
+
+  .menu-lateral{
+    padding-left: 15px;
+    padding-top: 20px;
+  } 
+
+  header{
+    margin-bottom: -20px;
+  }
+  
+
   .rounded-box {
       border-radius: 15px;
       background-color: white;
@@ -139,8 +150,9 @@ body, .menu-lateral {
   
   /* Ajustes de layout para evitar scroll */
   body, html, .container-fluid, .row, .menu-lateral, .col-md-10 {
-    height: 100vh; /* Altura completa de la ventana */
-    overflow: hidden; /* Evitar scroll */
+    min-height: 50vh; /* Altura completa de la ventana */
+    overflow-y: auto; 
+    overflow-x: hidden; 
   }
   
   /* Asegurarse de que el contenido interno sea scrollable si es necesario */
@@ -542,7 +554,58 @@ LOGIN
 }
 
 .img-nav{
-  max-width: 50px;
+  max-width: 65px;
   margin: 10px;
+}
+
+.input-newRol{
+  width: 75%;
+  height: 40px; /* Ajusta la altura según sea necesario */
+  margin-right: 5px; /* Espacio entre el input y el botón */
+}
+
+.btn-newRol{
+  width: 25%;
+  height: 40px; /* Ajusta la altura según sea necesario */
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 20px; 
+  background-color: #0b5394;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.imagen_home{
+  width: 100%; /* Ancho del contenedor */
+  height: 750px; /* Altura del contenedor (puedes ajustarlo según necesites) */
+  background-size: cover; /* La imagen se ajustará para cubrir todo el contenedor */
+  background-position: center; /* La imagen se centrará dentro del contenedor */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.nav_home {
+  padding: 0px;
+  height: 50px;
+}
+
+.nav_home a {
+  text-decoration: none; /* Opcional: elimina el subrayado del enlace */
+  border: 3px solid transparent; /* Establece un borde transparente para evitar saltos en la página al aplicar el borde en hover */
+  align-items: center;
+  text-size-adjust: auto;
+  color: #0b5394;
+}
+.nav_home i {
+  border: 3px solid transparent; /* Establece un borde transparente para evitar saltos en la página al aplicar el borde en hover */
+  align-items: center;
+  color: #0b5394;
+}
+
+.nav_home a:hover, a:hover i {
+  background-color: #407f9e; /* Color y tamaño del borde al pasar el ratón por encima */
+  color: white;
 }
 
