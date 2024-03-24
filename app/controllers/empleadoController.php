@@ -58,7 +58,7 @@ class empleadoController extends EmpleadoModel {
     }
 
     public function recargarDetalles($id_emp){
-        header("Location: empleadosCRUD?id_emp={$id_emp}");
+        echo "<script>window.location.href='empleadosCRUD?id_emp={$id_emp}';</script>";
     }
 
     public function getTotalEmpleados(){

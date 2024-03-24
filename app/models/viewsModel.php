@@ -76,13 +76,16 @@ use app\controllers\viewsController;
 		protected function obtenerSubNavs($subnavs) {
 			$consulta = $this->db->query("SELECT * FROM modulos WHERE id_modulo in ({$subnavs});");
 
-
+			if (!$consulta) {
+				echo "Error al ejecutar la consulta: " . $this->db->error;
+				return false; // O maneja el error de acuerdo a tus necesidades
+			}
+			
 			while($fila = $consulta->fetch_assoc()){
 				$this->subnavs[] = $fila;
 
 			}
 			mysqli_free_result($consulta);
-	
 			return $this->subnavs;
 		}
 
