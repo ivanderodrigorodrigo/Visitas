@@ -39,7 +39,9 @@ use app\controllers\viewsController;
 					$contenido="./app/views/content/".$vista."-view.php";
 					$_SESSION['view_current'] = $vista;
 					}else{
-						$contenido="404";
+						//vista no encontrada poner vista para error 404
+						$_SESSION['view_current']='403';
+						$contenido="./app/views/content/403-view.php";
 					}
 				} else {
 					$_SESSION['view_current']='403';
@@ -51,7 +53,8 @@ use app\controllers\viewsController;
 				$_SESSION['view_current']='logout';
 				$contenido="./app/includes/session_close.php";
 			}else{
-				$contenido="404";
+				$_SESSION['view_current']='403';
+				$contenido="./app/views/content/403-view.php";
 			}
 			return $contenido;
 		}

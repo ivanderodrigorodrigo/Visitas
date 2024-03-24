@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-03-2024 a las 12:50:36
+-- Tiempo de generación: 24-03-2024 a las 21:12:35
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -55,7 +55,7 @@ WHERE
 GROUP BY
     m.nombre_modulo, m.url_modulo, n.iconos
 ORDER BY
-    m.id_modulo ASC$$
+    n.id_nav ASC$$
 
 DELIMITER ;
 
@@ -244,7 +244,8 @@ INSERT INTO `modulos` (`id_modulo`, `nombre_modulo`, `url_modulo`) VALUES
 (7, 'Historial de visitas', 'historial'),
 (8, 'Análisis estadístico', 'analisis'),
 (9, 'Búsqueda empleados', 'empleadosSearch'),
-(10, 'Cambiar contraseña', 'changePassword');
+(10, 'Cambiar contraseña', 'changePassword'),
+(11, 'Inicio', 'home');
 
 -- --------------------------------------------------------
 
@@ -272,13 +273,13 @@ INSERT INTO `modulos_roles` (`id_modulo`, `id_rol`, `modulo_default`) VALUES
 (1, 1, 'N'),
 (1, 2, 'N'),
 (1, 3, 'N'),
-(2, 1, 'S'),
-(2, 3, 'S'),
+(2, 1, 'N'),
+(2, 3, 'N'),
 (3, 1, 'N'),
 (3, 2, 'N'),
 (3, 3, 'N'),
 (4, 1, 'N'),
-(4, 2, 'S'),
+(4, 2, 'N'),
 (5, 1, 'N'),
 (6, 1, 'N'),
 (6, 2, 'N'),
@@ -294,7 +295,11 @@ INSERT INTO `modulos_roles` (`id_modulo`, `id_rol`, `modulo_default`) VALUES
 (10, 1, 'N'),
 (10, 2, 'N'),
 (10, 3, 'N'),
-(10, 4, 'N');
+(10, 4, 'N'),
+(11, 1, 'S'),
+(11, 2, 'S'),
+(11, 3, 'S'),
+(11, 4, 'S');
 
 -- --------------------------------------------------------
 
@@ -337,12 +342,13 @@ TRUNCATE TABLE `navs`;
 --
 
 INSERT INTO `navs` (`id_nav`, `id_modulo`, `id_nav_parent`, `iconos`) VALUES
-(1, 2, NULL, 'fa-users'),
-(2, 4, NULL, 'fa-calendar-alt'),
-(3, 5, NULL, 'fa-tools'),
-(4, 6, NULL, 'fa-chart-line'),
-(5, 7, 4, ''),
-(6, 8, 4, '');
+(1, 11, NULL, 'fa-home'),
+(2, 2, NULL, 'fa-users'),
+(3, 4, NULL, 'fa-calendar-alt'),
+(4, 5, NULL, 'fa-tools'),
+(5, 6, NULL, 'fa-chart-line'),
+(6, 7, 5, ''),
+(7, 8, 5, '');
 
 -- --------------------------------------------------------
 
@@ -368,7 +374,9 @@ TRUNCATE TABLE `permisos`;
 INSERT INTO `permisos` (`id_permiso`, `nombre_permiso`) VALUES
 (1, 'Edicion Informes'),
 (2, 'Edicion Empleados'),
-(3, 'Edicion Visitas');
+(3, 'Edicion Visitas'),
+(4, 'Registrar empleados'),
+(6, 'Eliminar empleados');
 
 -- --------------------------------------------------------
 
@@ -419,12 +427,14 @@ TRUNCATE TABLE `roles_permisos`;
 --
 
 INSERT INTO `roles_permisos` (`id_rol`, `id_permiso`) VALUES
+(2, 3),
+(3, 1),
+(4, 3),
 (1, 1),
 (1, 2),
 (1, 3),
-(2, 3),
-(3, 1),
-(4, 3);
+(1, 4),
+(1, 6);
 
 -- --------------------------------------------------------
 
@@ -543,7 +553,7 @@ ALTER TABLE `estados_visita`
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `motivos_visita`
@@ -555,7 +565,7 @@ ALTER TABLE `motivos_visita`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
