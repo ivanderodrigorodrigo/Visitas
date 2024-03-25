@@ -10,6 +10,7 @@
 
         $url=explode("/", $_GET['views']);
 
+
         if ($url[0] <> 'changePassword' && !isset($_SESSION['id'])){
             $url=["login"];
         }
@@ -72,6 +73,7 @@
                         </header>
                 <div class="row flex-grow-1">
                     <?php 
+
 
                         require_once "./app/views/global/nav.php";
                         require_once $vista;

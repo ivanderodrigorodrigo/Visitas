@@ -1,6 +1,10 @@
 <?php
 
 namespace app\models;
+if(file_exists(__DIR__."/../../config/app.php")){
+    require_once __DIR__."/../../config/app.php";
+}
+
 
 use Exception;
 
@@ -52,6 +56,7 @@ class EmpleadoModel {
         $pagina = ($pagina - 1) * $this->filas;
         $sort = $this->campoOrdenado($sort);
         $consulta = $this->db->query("SELECT * FROM empleados AS e INNER JOIN roles r ON e.rol_id = r.id_rol ORDER BY {$sort} {$order} LIMIT {$pagina}, {$this->filas};");
+
       
         while($fila = $consulta->fetch_assoc()){
             $this->empleados[] = $fila;
@@ -193,6 +198,7 @@ class EmpleadoModel {
         }
     }
     
+
 
 }
 ?>

@@ -11,6 +11,7 @@ function activarSubMenu(idsub){
         dropdown.classList.remove('fa-angle-up');
         dropdown.classList.add('fa-angle-down');
     }
+
 }
 
 function goBack(ventana) {

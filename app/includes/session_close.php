@@ -14,4 +14,5 @@ session_destroy();
 echo '<script> alert("Sesión finalizada con éxito.");';
 echo "window.location.href='".APP_URL."login/'; </script>";
 
+
 ?>

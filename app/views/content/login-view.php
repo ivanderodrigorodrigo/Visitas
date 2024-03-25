@@ -20,6 +20,7 @@ $auth = new authenticate();
             <div class="login-form-seccion">
                 <label for="email">Correo electrónico</label>
                 <input type="email" id="email" name="email" placeholder="" value="<?php echo isset($_POST['email'])? $_POST['email']:''; ?>" required>
+
             </div>
             <div class="login-form-seccion">
                 <label for="password">Contraseña</label>
@@ -38,6 +39,7 @@ $auth = new authenticate();
     </div>
         
     <a class="presential-link" target="_blank">PresentiaL SL</a>
+
         
     <div class="footer-links">
         <a href="#">Ayuda</a>

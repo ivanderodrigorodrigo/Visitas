@@ -17,6 +17,7 @@ class globalController {
             //Parsear la cadena de consulta para obtener los parámetros
             parse_str($url_componentes['query'], $parametros);
             $ref_id = isset($parametros[$ref]) ? $parametros[$ref] : null;    
+
         }
 
         return $ref_id;
@@ -39,6 +40,7 @@ class globalController {
 
         return $cadena;
     }
+
 
 
 }

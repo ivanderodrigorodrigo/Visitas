@@ -70,6 +70,7 @@ class empleadoController extends EmpleadoModel {
     }
     public function getTotalEmpleadosSearch($nombre){
         return $this->emp->getTotalEmpleadosSearch($nombre);
+
     }
 
 }
