@@ -1,6 +1,16 @@
 
-body, .menu-lateral {
+body {
     background-color: #e7f0fa; /* Color de fondo azul claro para la página */
+    padding-left: 15px;
+  }
+
+  .menu-lateral{
+    padding-left: 15px;
+    padding-top: 20px;
+  } 
+
+  header{
+    margin-bottom: -20px;
   }
   .rounded-box {
       border-radius: 15px;
@@ -138,8 +148,9 @@ body, .menu-lateral {
   
   /* Ajustes de layout para evitar scroll */
   body, html, .container-fluid, .row, .menu-lateral, .col-md-10 {
-    height: 100vh; /* Altura completa de la ventana */
-    overflow: hidden; /* Evitar scroll */
+    min-height: 50vh; /* Altura completa de la ventana */
+    overflow-y: auto; 
+    overflow-x: hidden; 
   }
   
   /* Asegurarse de que el contenido interno sea scrollable si es necesario */
@@ -289,7 +300,9 @@ LISTADO EMPLEADOS
   flex-grow: 1;
   max-width: 50%; /* Limita el ancho del input a la mitad del contenedor */
   margin: 0; /* Asegúrate de que no haya margen extra */
-  padding: 0.375rem 0.75rem; /* Ajusta el relleno para igualarlo con el botón */
+  padding: 10px 0.75rem; /* Ajusta el relleno para igualarlo con el botón */
+  border-radius: 5px;
+
 }
 
 .btn-search {
@@ -369,6 +382,7 @@ LISTADO EMPLEADOS
   border-color: #dee2e6;
   color: #ced4da;
   margin-left: 20px; /* Espacio adicional a la izquierda del botón de página siguiente */
+
 }
 
 .fa-arrow-right, .fa-arrow-left{
@@ -488,6 +502,7 @@ LOGIN
   /* Quita el ancho del 100% para que el botón se ajuste al contenido */
 }
 
+
 .login-form-seccion {
   margin-bottom: 15px; /* Reducción para evitar scroll */
 }
@@ -524,6 +539,8 @@ LOGIN
   color: red;
   height: 20px;
   margin-bottom: 10px;
+  margin-top: 5px
+
 }
 
 .presential-link {
@@ -538,14 +555,60 @@ LOGIN
   font-size: 16px; /* Tamaño del texto, ajustable a tus necesidades */
 }
 
-
-header{
-  max-height: 70px;
-
+.img-nav{
+  max-width: 65px;
+  margin: 10px;
 }
 
-.img-nav{
-  max-width: 50px;
-  margin: 10px;
+.input-newRol{
+  width: 75%;
+  height: 40px; /* Ajusta la altura según sea necesario */
+  margin-right: 5px; /* Espacio entre el input y el botón */
+}
+
+.btn-newRol{
+  width: 25%;
+  height: 40px; /* Ajusta la altura según sea necesario */
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 20px; 
+  background-color: #0b5394;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.imagen_home{
+  width: 100%; /* Ancho del contenedor */
+  height: 750px; /* Altura del contenedor (puedes ajustarlo según necesites) */
+  background-size: cover; /* La imagen se ajustará para cubrir todo el contenedor */
+  background-position: center; /* La imagen se centrará dentro del contenedor */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.nav_home {
+  padding: 0px;
+  height: 50px;
+}
+
+.nav_home a {
+  text-decoration: none; /* Opcional: elimina el subrayado del enlace */
+  border: 3px solid transparent; /* Establece un borde transparente para evitar saltos en la página al aplicar el borde en hover */
+  align-items: center;
+  text-size-adjust: auto;
+  color: #0b5394;
+}
+.nav_home i {
+  border: 3px solid transparent; /* Establece un borde transparente para evitar saltos en la página al aplicar el borde en hover */
+  align-items: center;
+  color: #0b5394;
+}
+
+.nav_home a:hover, a:hover i {
+  background-color: #407f9e; /* Color y tamaño del borde al pasar el ratón por encima */
+  color: white;
+
 }
 

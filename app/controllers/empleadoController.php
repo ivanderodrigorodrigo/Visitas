@@ -11,8 +11,8 @@ class empleadoController extends EmpleadoModel {
         $this->emp = new EmpleadoModel();
     }
 
-    public function mostrarEmpleados($pagina){
-        return $this->emp->get_empleados($pagina);
+    public function mostrarEmpleados($pagina,$sort,$order){
+        return $this->emp->get_empleados($pagina,$sort,$order);
 
     }
 
@@ -29,11 +29,10 @@ class empleadoController extends EmpleadoModel {
             $email_emp = $_POST['email_emp'];  
             $rol_id = $_POST['rol_emp'];
             $rol_id = $_POST['rol_emp'];
-            $estado_id = $_POST['estado_emp'];
             $activo_emp = 'S';
 
-            $this->emp->insertar($dni_emp, $nombre_emp, $apellido_emp, $email_emp, null, $rol_id, $activo_emp, $estado_id);
-            $this->mostrarEmpleadoView();
+            $id_emp = $this->emp->insertar($dni_emp, $nombre_emp, $apellido_emp, $email_emp, null, $rol_id, $activo_emp);
+            $this->recargarDetalles($id_emp);
         }
     }
 
@@ -46,31 +45,32 @@ class empleadoController extends EmpleadoModel {
             $apellido_emp = $_POST['apellido_emp'];
             $email_emp = $_POST['email_emp'];    
             $rol_id = $_POST['rol_emp'];
-            $estado_id = $_POST['estado_emp'];
             $activo_emp = $_POST['activo_emp'];
 
-            $this->emp->modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id, $estado_id, $activo_emp);
-            $this->mostrarEmpleadoView();
-
+            $this->emp->modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id, $activo_emp);
+            $this->recargarDetalles($id_emp);
         }
     }
 
     public function eliminarEmpleado($id_emp){
         $this->emp->eliminar($id_emp);
-        $this->mostrarEmpleadoView();
+        $this->recargarDetalles($id_emp);
     }
 
-
-    public function getEstados(){
-        return $this->emp->getEstados();
-     }
-
-    public function mostrarEmpleadoView(){
-        header("Location: ".APP_URL."empleados/");
+    public function recargarDetalles($id_emp){
+        echo "<script>window.location.href='empleadosCRUD?id_emp={$id_emp}';</script>";
     }
 
     public function getTotalEmpleados(){
         return $this->emp->getTotalEmpleados();
+    }
+
+    public function buscarEmpleados($nombre, $pagina) {
+        return $this->emp->buscarEmpleados($nombre, $pagina);
+    }
+    public function getTotalEmpleadosSearch($nombre){
+        return $this->emp->getTotalEmpleadosSearch($nombre);
+
     }
 
 }

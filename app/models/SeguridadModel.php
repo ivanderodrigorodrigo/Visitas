@@ -21,4 +21,10 @@ class SeguridadModel {
         return $this->roles;
     }
 
+    public function PermisosModuloRol($modulo, $rol){
+        $consulta = $this->db->query("SELECT * FROM modulos_roles WHERE id_modulo = {$modulo} AND id_rol = {$rol};");
+        $resultado = $consulta->fetch_assoc();
+        return $resultado;
+    }
+
 }

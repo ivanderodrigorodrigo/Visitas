@@ -7,39 +7,39 @@ $auth = new authenticate();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
+    <title>Recuperar contraseña</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="body_login">
     
     <div class="login-container">
         <img class="img-logo-login" src="<?php echo APP_URL; ?>app/views/img/Logo CheckInSight.png" alt="Logo" /> <!-- Reemplaza con la ruta a tu logo -->
-        <p>Accede a tu aplicación <strong>CheckInSight</strong></p>
+        <p>Recuperar o cambiar contraseña</p>
      
         <form class="login-form" action="" method="post">
             <div class="login-form-seccion">
                 <label for="email">Correo electrónico</label>
                 <input type="email" id="email" name="email" placeholder="" value="<?php echo isset($_POST['email'])? $_POST['email']:''; ?>" required>
-
             </div>
             <div class="login-form-seccion">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" placeholder="" required>
+                <label for="psw1">Contraseña</label>
+                <input type="password" id="psw1" name="psw1" placeholder="" required>
+            </div>
+            <div class="login-form-seccion">
+                <label for="psw2">Contraseña</label>
+                <input type="password" id="psw2" name="psw2" placeholder="" required>
             </div>
 
-
             <?php
-                if(isset($_POST['email']) && isset($_POST['password'])){
-                    $auth->verificarUser();
+                if(isset($_POST['email']) && isset($_POST['psw1']) && isset($_POST['psw2'])){
+                    $auth->changePassword();
                 }
 		    ?>
-        <button type="submit">Iniciar Sesión</button>
+        <button type="submit">Cambiar contraseña</button>
         </form>
-        <a href="<?php echo APP_URL ?>changePassword">Recuperar contraseña</a>
     </div>
         
-    <a class="presential-link" target="_blank">PresentiaL SL</a>
-
+    <a href="http://www.presentialsl.com" class="presential-link" target="_blank">PresentiaL SL</a>
         
     <div class="footer-links">
         <a href="#">Ayuda</a>

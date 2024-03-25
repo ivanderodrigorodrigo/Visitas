@@ -11,5 +11,8 @@ if (ini_get("session.use_cookies")) {
 
 // Finalmente, destruir la sesión.
 session_destroy();
-header("Location: ".APP_URL.'login');
+echo '<script> alert("Sesión finalizada con éxito.");';
+echo "window.location.href='".APP_URL."login/'; </script>";
+
+
 ?>

@@ -2,10 +2,18 @@
     use app\controllers\empleadoController;
     use app\controllers\SeguridadController;
     use app\controllers\globalController;
+    use app\controllers\RolesyPermisosController;
 
     $emp = new empleadoController();
     $seg = new SeguridadController();
     $global = new globalController();
+    $perm_rol = new RolesyPermisosController();
+
+    //Mostrar los permisos que tiene el usuario
+    $permisos = $perm_rol->mostrarPermisosPorRol($_SESSION['user_rol']);
+    $nombrePermisosActuales = array_column($permisos, 'nombre_permiso');
+    $editar = array_search('Edicion Empleados',$nombrePermisosActuales);
+    $eliminar = array_search('Eliminar empleados',$nombrePermisosActuales);
 
     $details = false;
     $empleado = null;
@@ -16,14 +24,25 @@
         $details = true;
     }
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['action']) && $_POST['action'] == 'Baja_empleado'){
+            echo $_POST['action'];
+            $emp->eliminarEmpleado($_POST['id_emp']);
+        }elseif (isset($_POST['action']) && $_POST['action'] == 'Actualizar_empleado'){
+            $emp->modificarEmpleado();
+        }elseif (isset($_POST['action']) && $_POST['action'] == 'Registrar_empleado'){
+            $emp->insertarEmpleado();
+        }
+    }
+
+
+
 ?>
 
-<form class="col-md-10" method="post" action="<?php echo  $details ? $emp->modificarEmpleado() : $emp->insertarEmpleado(); ?> ">
+<form class="col-md-10" id="formulario" method="post" action="">
     <div class="rounded-box d-flex flex-column justify-content-center">
     <!-- Título -->
-    <div class="formulario-seccion">
-        <h2 class="tituloEmpleados"><?php echo $details ? 'Editar Empleado' : 'Registrar Nuevo Empleado'; ?></h2>
-    </div>
+    <h2><?php echo $details ? 'Editar Empleado' : 'Registrar Nuevo Empleado'; ?></h2>
     <!-- Número de empleado por si se debe modificar. -->
     <div class="formulario-seccion">
         <input
@@ -38,7 +57,7 @@
         <?php echo $details ? 'readonly' : ''; ?>
         />
     </div>
-    <input type="hidden" id="activo_emp" name="activo_emp" value="S" style="display: none;">
+    <input type="hidden" id="action" name="action" value="" style="display: none;">
     <!-- Nombre y DNI -->
     <div class="form-row formulario-seccion">
         <div class="col">
@@ -109,34 +128,41 @@
             </select>
         </div>
         <div class="col mr-0">
-            <label for="estado_emp">Estado</label>
-            <select id="estado_emp" name="estado_emp" class="form-control" <?php echo $details ? 'disabled' : ''; ?>>
-                <option value=""></option>
-                <?php foreach ($emp->getEstados() as $estado) : ?>
-                    <option value="<?php echo $estado['id_estado']; ?>" <?php echo ($details && $estado['id_estado'] == $empleado['estado_id']) ? 'selected' : ''; ?>>
-                        <?php echo $estado['nombre_estado']; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+            <label for="activo_emp">Estado</label>
+            <input
+            type="text"
+            id="activo_emp"
+            name="activo_emp"
+            class="form-control"
+            value="<?php echo $details ? ($empleado['activo_emp'] == 'S' ? 'Usuario activo' : 'Usuario dado de baja') : ''; ?>"
+            readonly
+            />
         </div>
     </div>
+
     <!-- Botones -->
     <div class="form-row botones formulario-seccion">
     <div class="col">
     <div style="display: flex; justify-content: space-between;">
         <div>
             <?php if (!$details) : ?>
-                <button type="submit" class="btn btn-accept" <?php echo $details ? 'disabled' : ''; ?>>Registrar</button>
+                <button type="submit" id="btn_registrar" class="btn btn-accept" <?php echo $details ? 'disabled' : ''; ?>>Registrar</button>
             <?php endif; ?>
             <?php if (($details)) : ?>
-                <button type="button" id="btn_edicion" class="btn btn-modify" onclick="activarEdicion();">Editar</button>
+                <button type="button" id="btn_edicion" class="btn btn-modify" <?php echo !$editar ? 'style="display: none;"' : ''; ?>
+                 onclick="activarEdicion();">Editar</button>
                 <button type="submit" id="btn_save" class="btn btn-accept" style="display: none;" disabled>Guardar</button>
             <?php endif; ?>
         </div>
         
         <div>
-            <button type="button" class="btn btn-cancel" onclick="goBack()">Cancelar</button>
-            <button type="submit" onclick="eliminar()" class="btn btn-delete" >Eliminar</button>
+            <button type="button" class="btn btn-cancel" onclick="goBack('Empleados')">Volver</button>
+            <?php if (($details)) : ?>
+                <button type="submit" id="btn_baja" class="btn btn-delete"
+                <?php echo !$eliminar ? 'style="display: none;"' : ''; ?>
+                >Dar de baja</button>
+            <?php endif; ?>
+            
         </div>
     </div>
 </div>
@@ -164,6 +190,46 @@
 </form>
 
 <script>
+
+    const btnbaja = document.getElementById('btn_baja');
+    const btn_save = document.getElementById('btn_save');
+    const btn_registrar = document.getElementById('btn_registrar');
+    if (btnbaja) {
+        btnbaja.addEventListener('click', (e) => {
+            e.preventDefault()
+
+            var action = document.getElementById('action');
+            action.value = 'Baja_empleado';
+
+            document.getElementById('formulario').submit()
+
+        })
+    }
+
+    if (btn_save) {
+        btn_save.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        var action = document.getElementById('action');
+        action.value = 'Actualizar_empleado';
+
+        document.getElementById('formulario').submit()
+
+    })
+    }
+
+    if (btn_registrar) {
+        btn_registrar.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        var action = document.getElementById('action');
+        action.value = 'Registrar_empleado';
+
+        document.getElementById('formulario').submit()
+
+    })
+    }
+
     function activarEdicion() { 
         
         var inputDNI = document.getElementById('dni_emp');
@@ -171,7 +237,6 @@
         var inputApellidos = document.getElementById('apellido_emp');
         var inputEmail = document.getElementById('email_emp');
         var inputRol = document.getElementById('rol_emp');
-        var inputEstado = document.getElementById('estado_emp');
         var btn_edicion = document.getElementById('btn_edicion');
         var btn_save = document.getElementById('btn_save');
 
@@ -180,20 +245,12 @@
         inputApellidos.removeAttribute("readonly");
         inputEmail.removeAttribute("readonly");
         inputRol.removeAttribute("disabled");
-        inputEstado.removeAttribute("disabled");
         btn_save.removeAttribute("disabled");
         btn_save.style.display = 'inline-block';
         btn_edicion.setAttribute('disabled','');
         btn_edicion.style.display = 'none';
         
     }
-
-    function eliminar(){
-        var action = document.getElementById('activo_emp');
-        action.value = 'N';
-        activarEdicion();
-    }
-
 
 
 </script>
