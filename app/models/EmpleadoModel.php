@@ -84,8 +84,8 @@ class EmpleadoModel {
         }
     }
 
-    public function modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id,$activo_emp){
-        $resultado = $this->db->query("UPDATE empleados SET dni_emp='{$dni_emp}', nombre_emp='{$nombre_emp}', apellido_emp='{$apellido_emp}', email_emp='{$email_emp}',  rol_id={$rol_id}, activo_emp = '{$activo_emp}' WHERE id_emp={$id_emp};");
+    public function modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id){
+        $resultado = $this->db->query("UPDATE empleados SET dni_emp='{$dni_emp}', nombre_emp='{$nombre_emp}', apellido_emp='{$apellido_emp}', email_emp='{$email_emp}',  rol_id={$rol_id} WHERE id_emp={$id_emp};");
         return $resultado;
     }
 
@@ -107,7 +107,7 @@ class EmpleadoModel {
         if($consulta->num_rows > 0){
             $emp = mysqli_fetch_array($consulta);
             return $emp["TOTAL"];
-            return true;
+         
         }
 
         return 0;
@@ -130,7 +130,7 @@ class EmpleadoModel {
         if($consulta->num_rows > 0){
             $emp = mysqli_fetch_array($consulta);
             return $emp["TOTAL"];
-            return true;
+            
         }
 
         return 0;
