@@ -126,6 +126,7 @@ INSERT INTO `empleados` (`id_emp`, `dni_emp`, `nombre_emp`, `apellido_emp`, `ema
 (22, '08684829C', 'Roberto', 'Sanchez', 'rsanchez@example.com', NULL, 2, 'S'),
 (23, '57697950I', 'Roberto', 'Ruiz', 'rruiz@example.com', '$2y$10$UrVdDQC54ceclaF4.0QJwOvvH3D1tnzv1uXIQCejeR96P5cMepbEC', 3, 'S');
 
+
 --
 -- Disparadores `empleados`
 --
@@ -168,6 +169,7 @@ CREATE TABLE `empresa` (
 --
 
 TRUNCATE TABLE `empresa`;
+
 --
 -- Volcado de datos para la tabla `empresa`
 --
@@ -231,6 +233,7 @@ CREATE TABLE `modulos` (
 
 TRUNCATE TABLE `modulos`;
 --
+
 -- Volcado de datos para la tabla `modulos`
 --
 
@@ -246,6 +249,7 @@ INSERT INTO `modulos` (`id_modulo`, `nombre_modulo`, `url_modulo`) VALUES
 (9, 'Búsqueda empleados', 'empleadosSearch'),
 (10, 'Cambiar contraseña', 'changePassword'),
 (11, 'Inicio', 'home');
+
 
 -- --------------------------------------------------------
 
@@ -266,6 +270,7 @@ CREATE TABLE `modulos_roles` (
 
 TRUNCATE TABLE `modulos_roles`;
 --
+
 -- Volcado de datos para la tabla `modulos_roles`
 --
 
@@ -300,6 +305,7 @@ INSERT INTO `modulos_roles` (`id_modulo`, `id_rol`, `modulo_default`) VALUES
 (11, 2, 'S'),
 (11, 3, 'S'),
 (11, 4, 'S');
+
 
 -- --------------------------------------------------------
 
@@ -349,6 +355,32 @@ INSERT INTO `navs` (`id_nav`, `id_modulo`, `id_nav_parent`, `iconos`) VALUES
 (5, 6, NULL, 'fa-chart-line'),
 (6, 7, 5, ''),
 (7, 8, 5, '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `navs`
+--
+
+DROP TABLE IF EXISTS `navs`;
+CREATE TABLE `navs` (
+  `id_nav` int(11) NOT NULL,
+  `id_modulo` int(11) DEFAULT NULL,
+  `id_nav_parent` int(11) DEFAULT NULL,
+  `iconos` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `navs`
+--
+
+INSERT INTO `navs` (`id_nav`, `id_modulo`, `id_nav_parent`, `iconos`) VALUES
+(1, 2, NULL, 'fa-users'),
+(2, 4, NULL, 'fa-calendar-alt'),
+(3, 5, NULL, 'fa-tools'),
+(4, 6, NULL, 'fa-chart-line'),
+(5, 7, 4, ''),
+(6, 8, 4, '');
 
 -- --------------------------------------------------------
 
@@ -509,6 +541,7 @@ ALTER TABLE `motivos_visita`
 ALTER TABLE `navs`
   ADD UNIQUE KEY `id_nav` (`id_nav`);
 
+
 --
 -- Indices de la tabla `permisos`
 --
@@ -556,11 +589,18 @@ ALTER TABLE `estados_visita`
 ALTER TABLE `modulos`
   MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
+
 --
 -- AUTO_INCREMENT de la tabla `motivos_visita`
 --
 ALTER TABLE `motivos_visita`
   MODIFY `id_motivo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `navs`
+--
+ALTER TABLE `navs`
+  MODIFY `id_nav` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -589,6 +629,7 @@ ALTER TABLE `visitantes`
 --
 ALTER TABLE `empleados`
   ADD CONSTRAINT `empleados_ibfk_1` FOREIGN KEY (`rol_id`) REFERENCES `roles` (`id_rol`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

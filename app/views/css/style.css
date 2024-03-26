@@ -12,8 +12,6 @@ body {
   header{
     margin-bottom: -20px;
   }
-  
-
   .rounded-box {
       border-radius: 15px;
       background-color: white;
@@ -304,6 +302,7 @@ LISTADO EMPLEADOS
   margin: 0; /* Asegúrate de que no haya margen extra */
   padding: 10px 0.75rem; /* Ajusta el relleno para igualarlo con el botón */
   border-radius: 5px;
+
 }
 
 .btn-search {
@@ -383,6 +382,7 @@ LISTADO EMPLEADOS
   border-color: #dee2e6;
   color: #ced4da;
   margin-left: 20px; /* Espacio adicional a la izquierda del botón de página siguiente */
+
 }
 
 .fa-arrow-right, .fa-arrow-left{
@@ -502,6 +502,7 @@ LOGIN
   /* Quita el ancho del 100% para que el botón se ajuste al contenido */
 }
 
+
 .login-form-seccion {
   margin-bottom: 15px; /* Reducción para evitar scroll */
 }
@@ -539,6 +540,7 @@ LOGIN
   height: 20px;
   margin-bottom: 10px;
   margin-top: 5px
+
 }
 
 .presential-link {
@@ -607,5 +609,6 @@ LOGIN
 .nav_home a:hover, a:hover i {
   background-color: #407f9e; /* Color y tamaño del borde al pasar el ratón por encima */
   color: white;
+
 }
 

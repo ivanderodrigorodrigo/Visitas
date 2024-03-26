@@ -56,6 +56,7 @@ $_SESSION['filtro'] = isset($filtro) ? $filtro : '';
     </div>
 </div>
 
+
 <script>
     (function($) {
     $(document).ready(function(){

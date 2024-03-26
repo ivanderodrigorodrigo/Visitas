@@ -6,3 +6,4 @@
 
 	//Número de filas a mostrar en la tabla
 	const FILAS_TABLA = 7;
+

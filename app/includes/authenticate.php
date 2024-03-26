@@ -11,6 +11,7 @@ class authenticate extends EmpleadoModel {
     public function __construct(){
         $this->emp = new EmpleadoModel();
         $this->global = new globalController();
+
     }
 
     public function verificarUser(){
@@ -96,6 +97,7 @@ class authenticate extends EmpleadoModel {
                     </div>';
             }
         }
+
 
     }
 }
