@@ -56,6 +56,7 @@ use app\controllers\viewsController;
 				$_SESSION['view_current']='403';
 				$contenido="./app/views/content/403-view.php";
 			}
+	
 			return $contenido;
 		}
 

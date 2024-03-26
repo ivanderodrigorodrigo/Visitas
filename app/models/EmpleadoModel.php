@@ -86,6 +86,7 @@ class EmpleadoModel {
 
     public function modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id){
         $resultado = $this->db->query("UPDATE empleados SET dni_emp='{$dni_emp}', nombre_emp='{$nombre_emp}', apellido_emp='{$apellido_emp}', email_emp='{$email_emp}',  rol_id={$rol_id} WHERE id_emp={$id_emp};");
+
         return $resultado;
     }
 
