@@ -1,4 +1,5 @@
 <?php
+
 use app\controllers\VisitanteController;
 
 $controller = new app\controllers\VisitanteController();
@@ -57,6 +58,7 @@ $totalPaginas = $datosPaginados['totalPaginas'];
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Visitantes</title>
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -75,26 +77,35 @@ $totalPaginas = $datosPaginados['totalPaginas'];
             align-items: center;
             justify-content: space-between;
         }
+
         .form-inline input[type="text"],
         .form-inline input[type="email"],
         .form-inline input[type="datetime-local"],
-        .form-inline select { /* Aquí añadimos select al estilo */
-            margin: 10px 0;
+        .form-inline select,
+        .form-inline button {
+            flex-grow: 1; /* Esto permite que los elementos se expandan */
+            margin: 10px; /* Ajusta el margen para controlar el espaciado */
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            width: auto; /* Opcional, ajusta según necesites */
+            /* Ajuste el ancho mínimo para garantizar que los elementos no se vuelvan demasiado pequeños */
+            min-width: 120px;
         }
+
+        /* Opcional: ajuste para asegurar que el botón no crezca desproporcionadamente en comparación con los inputs */
         .form-inline button {
-            background-color: #007bff;
+            background-color: #0b5394;
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
+            flex-grow: 0; /* Esto previene que el botón se expanda */
+            flex-shrink: 0; /* Esto previene que el botón se encoja */
+            flex-basis: auto; /* Ajusta la base de flexión según el contenido del botón */
         }
+
+       
+       
+        
         .form-inline button:hover {
-            background-color: #0056b3;
+            color: #083c61;
         }
         table {
             width: 100%;
@@ -120,35 +131,70 @@ $totalPaginas = $datosPaginados['totalPaginas'];
         .btn-delete:hover {
             background-color: #c82333;
         }
+        
+        .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        justify-content: center; /* Asegura que la paginación esté centrada */
+    }
+        .page-link {
+        background-color: #0b5394;
+        color: white;
+        border: none;
+        padding: 12px 20px; /* Hacerlos un poco más grandes */
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Para los enlaces de paginación */
+        margin: 0 5px; /* Espaciado entre botones de paginación */
+        }
+
+        .page-link:hover {
+        background-color: white;
+        color: #0b5394;
+        border: 1px solid #0b5394;
+        }
+
     </style>
 </head>
 <body>
+<?php if (isset($_SESSION['error'])): ?>
+<script>
+    window.onload = function() {
+        // Crea una ventana modal/alerta con el mensaje de error
+        alert("<?php echo $_SESSION['error']; ?>");
+        <?php unset($_SESSION['error']); ?>
+    };
+</script>
+<?php endif; ?>
+
 <div class="rounded-box">
     <h2>Registrar Nuevo Visitante</h2>
     <form method="post" action="" class="form-inline">
-        <input type="text" name="dni_visitante" placeholder="DNI" required>
-        <input type="text" name="nombre_visitante" placeholder="Nombre" required>
-        <input type="text" name="apellido_visitante" placeholder="Apellido" required>
-        <input type="email" name="email_visitante" placeholder="Email" required>
-        <input type="text" name="empresa_visitante" placeholder="Empresa">
-        <input type="hidden" name="accion" value="crear">
-        <select name="id_emp_visita" required>
-            <option value="">Selecciona un empleado</option>
-            <?php foreach ($empleados as $empleado): ?>
-            <option value="<?= $empleado['id_emp'] ?>"><?= htmlspecialchars($empleado['nombre_emp']) . ' ' . htmlspecialchars($empleado['apellido_emp']) ?></option>
-            <?php endforeach; ?>
-        </select>
-
-        <select name="id_motivo_visita" required>
-            <option value="">Selecciona un motivo</option>
-            <option value="1">Proveedor</option>
-            <option value="2">Cliente</option>
-            <option value="3">Formación</option>
-            <option value="4">Otros</option>
-        </select>
-        <input type="datetime-local" name="fecha_visita" placeholder="Fecha de Visita" required>
-
-        <button type="submit">Guardar Visitante</button>
+        <div class="form-row">
+            <input type="text" name="dni_visitante" placeholder="DNI" required>
+            <input type="text" name="nombre_visitante" placeholder="Nombre" required>
+            <input type="text" name="apellido_visitante" placeholder="Apellido" required>
+            <input type="email" name="email_visitante" placeholder="Email" required>
+            <input type="text" name="empresa_visitante" placeholder="Empresa">
+        </div>
+        <div class="">
+            <select name="id_emp_visita" required>
+                <option value="">Selecciona un empleado</option>
+                <?php foreach ($empleados as $empleado): ?>
+                    <option value="<?= $empleado['id_emp'] ?>"><?= htmlspecialchars($empleado['nombre_emp']) . ' ' . htmlspecialchars($empleado['apellido_emp']) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <select name="id_motivo_visita" required>
+                <option value="">Selecciona un motivo</option>
+                <option value="1">Proveedor</option>
+                <option value="2">Cliente</option>
+                <option value="3">Formación</option>
+                <option value="4">Otros</option>
+            </select>
+            <input type="datetime-local" name="fecha_visita" placeholder="Fecha de Visita" required>
+            <button type="submit" class="btn-acc">Guardar Visitante</button>
+        </div>
     </form>
 
    
@@ -158,15 +204,18 @@ $totalPaginas = $datosPaginados['totalPaginas'];
 
    <h2>Buscar Visitantes</h2>
     <form method="get" action="" class="form-inline">
-        <input type="text" name="busqueda" placeholder="Buscar..." value="<?= htmlspecialchars($busqueda) ?>">
+        <div class="search-wrapper">
+            <input type="text" name="busqueda" placeholder="Buscar..." value="<?= htmlspecialchars($busqueda) ?>">
+            
+            <input type="hidden" name="ordenarPor" value="<?= htmlspecialchars($ordenarPor) ?>">
+            <input type="hidden" name="direccion" value="<?= htmlspecialchars($direccion) ?>">
+            <button type="submit" class="btn-acc">Buscar</button>
+        </div>
         
-        <input type="hidden" name="ordenarPor" value="<?= htmlspecialchars($ordenarPor) ?>">
-        <input type="hidden" name="direccion" value="<?= htmlspecialchars($direccion) ?>">
-        <button type="submit">Buscar</button>
     </form>
 
     <h2>Listado de Visitantes</h2>
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th><a href="?ordenarPor=dni_visitante&direccion=<?= $ordenarPor === 'dni_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">DNI</a></th>
@@ -222,8 +271,4 @@ $totalPaginas = $datosPaginados['totalPaginas'];
 
 
     
-   
-</div>
-
-</body>
-</html>
+ 

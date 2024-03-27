@@ -19,12 +19,19 @@ class VisitanteController {
     }
 
     public function guardar($datos) {
-        if (isset($datos['id_visitante'])) {
-            return $this->model->actualizarVisitante($datos['id_visitante'], $datos);
+        if ($this->model->dniYaExiste($datos['dni_visitante'])) {
+            // Establecer mensaje de error
+            $_SESSION['error'] = "El DNI ya existe. Elimine la visita anterior antes de registrar una nueva para este DNI: {$datos['dni_visitante']}";
+            return false;
         } else {
-            return $this->model->crearVisitante($datos);
+            if (isset($datos['id_visitante'])) {
+                return $this->model->actualizarVisitante($datos['id_visitante'], $datos);
+            } else {
+                return $this->model->crearVisitante($datos);
+            }
         }
     }
+    
 
 
     public function eliminar($id) {

@@ -77,7 +77,8 @@ class VisitanteModel {
    
     
     public function contarVisitantes($busqueda = '') {
-        $sql = "SELECT COUNT(*) as total FROM visitantes WHERE activo_visitante = 'S' AND fecha_visita >=CURDATE()";
+       
+        $sql = "SELECT COUNT(*) as total FROM visitantes WHERE activo_visitante = 'S' AND fecha_visita >=CURRENT_DATE";
     
         if (!empty($busqueda)) {
             $sql .= " AND (dni_visitante LIKE ? OR nombre_visitante LIKE ? OR apellido_visitante LIKE ? OR email_visitante LIKE ? OR empresa_visitante LIKE ?)";
@@ -96,6 +97,7 @@ class VisitanteModel {
     
     public function listarVisitantesConLimite($inicio, $tamanioPagina, $ordenarPor = 'fecha_visita', $direccion = 'ASC', $busqueda = '') {
         $this->actualizarEstadoVisitantes();
+      
         // Validar que la columna de ordenamiento sea una de las permitidas, agregando nombre_emp y apellido_emp
         $columnasValidas = ['dni_visitante', 'nombre_visitante', 'apellido_visitante', 'email_visitante', 'empresa_visitante', 'fecha_visita', 'nombre_emp', 'apellido_emp'];
         if (!in_array($ordenarPor, $columnasValidas)) {
@@ -105,8 +107,8 @@ class VisitanteModel {
     
         // Modificar la consulta SQL para incluir un JOIN con la tabla empleados y filtrar por fecha_visita futura
         $sql = "SELECT v.*, e.nombre_emp, e.apellido_emp FROM visitantes AS v
-                INNER JOIN empleados AS e ON v.id_emp_visita = e.id_emp
-                WHERE v.activo_visitante = 'S' AND v.fecha_visita >= CURDATE()";
+                LEFT JOIN empleados AS e ON v.id_emp_visita = e.id_emp 
+                WHERE v.activo_visitante = 'S' AND v.fecha_visita >=CURRENT_DATE";
     
         // Añadir búsqueda SQL si se proporcionó un término de búsqueda
         if ($busqueda) {
@@ -147,12 +149,20 @@ class VisitanteModel {
 
     
     public function actualizarEstadoVisitantes() {
-        $sql = "UPDATE visitantes SET activo_visitante = 'N' WHERE fecha_visita < CURDATE() AND activo_visitante = 'S'";
+       
+        $sql = "UPDATE visitantes SET activo_visitante = 'N' WHERE fecha_visita < CURRENT_DATE AND activo_visitante = 'S'";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
     }
     
    
+    public function dniYaExiste($dni) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) as total FROM visitantes WHERE dni_visitante = ?");
+        $stmt->bind_param("s", $dni);
+        $stmt->execute();
+        $resultado = $stmt->get_result()->fetch_assoc();
+        return $resultado['total'] > 0;
+    }
     
     
 }
