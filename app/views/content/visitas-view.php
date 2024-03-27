@@ -29,20 +29,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $accion) {
     }
 }
 
-// La lógica que genera el output HTML empieza aquí
-$visitantes = [];
-$busqueda = $_GET['busqueda'] ?? '';
-$paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-$totalPaginas = 1; // Define un valor predeterminado para totalPaginas
 
-if (!empty($busqueda)) {
-    $visitantes = $controller->buscar($busqueda);
-    // Opcional: Aquí podrías calcular el total de páginas basado en el conteo de resultados de búsqueda, si fuera aplicable.
-} else {
-    $datosPaginados = $controller->listarConPaginacion($paginaActual, 5);
-    $visitantes = $datosPaginados['visitantes'];
-    $totalPaginas = $datosPaginados['totalPaginas']; // Este valor ya se define en el caso de listar todos los visitantes.
-}
+
+// Recuperación y saneamiento de parámetros de búsqueda, ordenamiento y paginación
+$busqueda = $_GET['busqueda'] ?? '';
+$ordenarPor = $_GET['ordenarPor'] ?? 'fecha_visita';
+$direccion = $_GET['direccion'] ?? 'ASC';
+$paginaActual = $_GET['pagina'] ?? 1;
+
+// Unificar la obtención de datos para soportar búsqueda, paginación y ordenamiento
+$datosPaginados = $controller->listarConPaginacion($paginaActual, 5, $ordenarPor, $direccion, $busqueda);
+$visitantes = $datosPaginados['visitantes'];
+$totalPaginas = $datosPaginados['totalPaginas'];
+
 
 ?>
 
@@ -129,25 +128,31 @@ if (!empty($busqueda)) {
         <button type="submit">Guardar Visitante</button>
     </form>
 
-    <h2>Buscar Visitantes</h2>
-    <form method="get" action="" class="form-inline">
-        <input type="text" name="busqueda" placeholder="Buscar..." value="<?= htmlspecialchars($busqueda ?? '') ?>">
-        <button type="submit">Buscar</button>
-    </form>
+   
 
     
-   
+   <!-- Formularios para registrar y buscar visitantes -->
+
+   <h2>Buscar Visitantes</h2>
+    <form method="get" action="" class="form-inline">
+        <input type="text" name="busqueda" placeholder="Buscar..." value="<?= htmlspecialchars($busqueda) ?>">
+        <!-- Asegúrate de enviar también los parámetros de ordenamiento actuales al buscar -->
+        <input type="hidden" name="ordenarPor" value="<?= htmlspecialchars($ordenarPor) ?>">
+        <input type="hidden" name="direccion" value="<?= htmlspecialchars($direccion) ?>">
+        <button type="submit">Buscar</button>
+    </form>
 
     <h2>Listado de Visitantes</h2>
     <table>
         <thead>
             <tr>
-                <th>DNI</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Empresa</th>
-                <th>Fecha de Visita</th>
+                <!-- Agrega los enlaces de ordenamiento a cada cabecera de columna, manteniendo los parámetros de búsqueda -->
+                <th><a href="?ordenarPor=dni_visitante&direccion=<?= $ordenarPor === 'dni_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">DNI</a></th>
+                <th><a href="?ordenarPor=nombre_visitante&direccion=<?= $ordenarPor === 'nombre_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Nombre</a></th>
+                <th><a href="?ordenarPor=apellido_visitante&direccion=<?= $ordenarPor === 'apellido_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Apellido</a></th>
+                <th><a href="?ordenarPor=email_visitante&direccion=<?= $ordenarPor === 'email_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Email</a></th>
+                <th><a href="?ordenarPor=empresa_visitante&direccion=<?= $ordenarPor === 'empresa_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Empresa</a></th>
+                <th><a href="?ordenarPor=fecha_visita&direccion=<?= $ordenarPor === 'fecha_visita' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Fecha de Visita</a></th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -171,16 +176,27 @@ if (!empty($busqueda)) {
             <?php endforeach; ?>
         </tbody>
     </table>
+
+
+   
+
+   
     <!-- Paginación -->
     <nav aria-label="Paginación de visitantes">
         <ul class="pagination">
             <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                <li class="page-item <?= $i == $paginaActual ? 'active' : '' ?>">
-                    <a class="page-link" href="?pagina=<?= $i ?>"><?= $i ?></a>
-                </li>
+            <li class="page-item <?= $i == $paginaActual ? 'active' : '' ?>">
+                <a class="page-link" href="?pagina=<?= $i ?>&ordenarPor=<?= htmlspecialchars($ordenarPor) ?>&direccion=<?= htmlspecialchars($direccion) ?>&busqueda=<?=                htmlspecialchars($busqueda) ?>"><?= $i ?></a>
+            </li>
             <?php endfor; ?>
         </ul>
     </nav>
+</div>
+</body>
+</html>
+
+
+
     
    
 </div>

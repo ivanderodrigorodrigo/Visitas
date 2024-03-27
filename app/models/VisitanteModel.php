@@ -71,22 +71,64 @@ class VisitanteModel {
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
     
-    public function contarVisitantes() {
-        $resultado = $this->db->query("SELECT COUNT(*) as total FROM visitantes WHERE activo_visitante = 'S'");
-        $fila = $resultado->fetch_assoc();
-        return $fila['total'];
-    }
-
-    public function listarVisitantesConLimite($inicio, $tamanioPagina) {
-        $inicioEntero = intval($inicio); // Almacenar el valor en una variable
-        $tamanioPaginaEntero = intval($tamanioPagina); // Almacenar el valor en una variable
+    public function contarVisitantes($busqueda = '') {
+        // Inicializa la consulta base
+        $sql = "SELECT COUNT(*) as total FROM visitantes WHERE activo_visitante = 'S'";
         
-        $stmt = $this->db->prepare("SELECT * FROM visitantes WHERE activo_visitante = 'S' LIMIT ?, ?");
-        $stmt->bind_param("ii", $inicioEntero, $tamanioPaginaEntero); // Pasar las variables a bind_param()
+        // Preparar los parámetros de búsqueda si es necesario
+        if (!empty($busqueda)) {
+            // Añade condiciones de búsqueda a la consulta
+            $sql .= " AND (dni_visitante LIKE ? OR nombre_visitante LIKE ? OR apellido_visitante LIKE ? OR email_visitante LIKE ? OR empresa_visitante LIKE ?)";
+            
+            // Preparar la consulta con parámetros de búsqueda
+            $stmt = $this->db->prepare($sql);
+            
+            // Concatena los comodines para la búsqueda LIKE
+            $likeBusqueda = '%' . $busqueda . '%';
+            
+            // Vincula los parámetros al statement preparado
+            $stmt->bind_param("sssss", $likeBusqueda, $likeBusqueda, $likeBusqueda, $likeBusqueda, $likeBusqueda);
+        } else {
+            // Prepara la consulta sin parámetros de búsqueda
+            $stmt = $this->db->prepare($sql);
+        }
+        
+        // Ejecuta la consulta
         $stmt->execute();
-        $resultado = $stmt->get_result();
-        return $resultado->fetch_all(MYSQLI_ASSOC);
+        
+        // Obtiene y devuelve el resultado
+        $resultado = $stmt->get_result()->fetch_assoc();
+        
+        return $resultado['total'];
     }
+    
+
+    public function listarVisitantesConLimite($inicio, $tamanioPagina, $ordenarPor = 'fecha_visita', $direccion = 'ASC', $busqueda = '') {
+        $columnasValidas = ['dni_visitante', 'nombre_visitante', 'apellido_visitante', 'email_visitante', 'empresa_visitante', 'fecha_visita'];
+        if (!in_array($ordenarPor, $columnasValidas)) {
+            $ordenarPor = 'fecha_visita';
+        }
+        $direccion = strtoupper($direccion) === 'DESC' ? 'DESC' : 'ASC';
+        
+        $busquedaSql = $busqueda ? " AND (dni_visitante LIKE ? OR nombre_visitante LIKE ? OR apellido_visitante LIKE ? OR email_visitante LIKE ? OR empresa_visitante LIKE ?)" : '';
+        $sql = "SELECT * FROM visitantes WHERE activo_visitante = 'S'" . $busquedaSql . " ORDER BY $ordenarPor $direccion LIMIT ?, ?";
+        $stmt = $this->db->prepare($sql);
+        
+        if ($busqueda) {
+            $likeBusqueda = '%' . $busqueda . '%';
+            // Aquí, se usan 5 's' para los parámetros de búsqueda y 2 'i' para los de paginación.
+            $stmt->bind_param("sssssii", $likeBusqueda, $likeBusqueda, $likeBusqueda, $likeBusqueda, $likeBusqueda, $inicio, $tamanioPagina);
+        } else {
+            // Cuando no hay búsqueda, solo se vinculan los parámetros de paginación.
+            $stmt->bind_param("ii", $inicio, $tamanioPagina);
+        }
+        
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    
+    
     
     
 

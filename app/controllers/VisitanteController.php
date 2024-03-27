@@ -49,21 +49,15 @@ class VisitanteController {
     
     
 
-    public function listarConPaginacion($pagina = 1, $tamanioPagina = 5) {
-        // Asegurar que la página no sea menor que 1
+    public function listarConPaginacion($pagina = 1, $tamanioPagina = 5, $ordenarPor = 'fecha_visita', $direccion = 'ASC', $busqueda = '') {
         $pagina = max(1, intval($pagina));
-        
-        // Calcular el valor de inicio basado en la página actual y el tamaño de la página
         $inicio = ($pagina - 1) * $tamanioPagina;
-        
-        // Obtener el total de visitantes y calcular el total de páginas
-        $totalVisitantes = $this->model->contarVisitantes();
+    
+        // Integrar la búsqueda en el conteo total y en la obtención de los visitantes
+        $totalVisitantes = $this->model->contarVisitantes($busqueda); // Asume que adaptas este método para aceptar búsqueda
         $totalPaginas = ceil($totalVisitantes / $tamanioPagina);
-        
-        // Obtener los visitantes con el límite correcto
-        $visitantes = $this->model->listarVisitantesConLimite($inicio, $tamanioPagina);
-        
-        // Devolver los resultados junto con la información de paginación
+        $visitantes = $this->model->listarVisitantesConLimite($inicio, $tamanioPagina, $ordenarPor, $direccion, $busqueda); // Asume que adaptas este método para aceptar búsqueda
+    
         return [
             'visitantes' => $visitantes,
             'pagina' => $pagina,
@@ -71,6 +65,8 @@ class VisitanteController {
             'totalVisitantes' => $totalVisitantes
         ];
     }
+    
+    
     
     
     
