@@ -26,6 +26,7 @@ class VisitanteController {
         }
     }
 
+
     public function eliminar($id) {
         return $this->model->eliminarVisitante($id);
     }
@@ -50,6 +51,7 @@ class VisitanteController {
     
 
     public function listarConPaginacion($pagina = 1, $tamanioPagina = 5, $ordenarPor = 'fecha_visita', $direccion = 'ASC', $busqueda = '') {
+        
         $pagina = max(1, intval($pagina));
         $inicio = ($pagina - 1) * $tamanioPagina;
     
@@ -66,6 +68,9 @@ class VisitanteController {
         ];
     }
     
+    public function obtenerEmpleados() {
+        return $this->model->listarEmpleados();
+    }
     
     
     

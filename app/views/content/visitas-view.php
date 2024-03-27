@@ -6,10 +6,14 @@ $controller = new app\controllers\VisitanteController();
 $accion = $_POST['accion'] ?? ''; // Uso del operador de fusión null para evitar undefined index
 $idVisitante = $_POST['id_visitante'] ?? ''; // Obtener id de visitante si está definido
 $fechaVisitaPost = $_POST['fecha_visita'] ?? null; // Asignar null por defecto si no está definido
+// Obtiene la lista de empleados para el formulario
+$empleados = $controller->obtenerEmpleados();
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $accion) {
     if ($accion === 'crear' && $fechaVisitaPost) {
         $fechaHoraVisita = date('Y-m-d H:i:s', strtotime($fechaVisitaPost));
+        
         $datosVisitante = [
             'dni_visitante' => $_POST['dni_visitante'],
             'nombre_visitante' => $_POST['nombre_visitante'],
@@ -17,11 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $accion) {
             'email_visitante' => $_POST['email_visitante'],
             'empresa_visitante' => $_POST['empresa_visitante'],
             'fecha_visita' => $fechaHoraVisita,
+            'id_emp_visita' => $_POST['id_emp_visita'], // Asegúrate de recoger este valor
+            'id_motivo_visita' => $_POST['id_motivo_visita'], // y este también
         ];
         $controller->guardar($datosVisitante);
-        // Redireccionar inmediatamente después de procesar el POST para evitar el output antes de header()
         header("Location: {$_SERVER['REQUEST_URI']}");
         exit();
+    
     } elseif ($accion === 'eliminar' && $idVisitante) {
         $controller->eliminar($idVisitante);
         header("Location: {$_SERVER['REQUEST_URI']}");
@@ -71,11 +77,13 @@ $totalPaginas = $datosPaginados['totalPaginas'];
         }
         .form-inline input[type="text"],
         .form-inline input[type="email"],
-        .form-inline input[type="datetime-local"] {
+        .form-inline input[type="datetime-local"],
+        .form-inline select { /* Aquí añadimos select al estilo */
             margin: 10px 0;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            width: auto; /* Opcional, ajusta según necesites */
         }
         .form-inline button {
             background-color: #007bff;
@@ -123,8 +131,23 @@ $totalPaginas = $datosPaginados['totalPaginas'];
         <input type="text" name="apellido_visitante" placeholder="Apellido" required>
         <input type="email" name="email_visitante" placeholder="Email" required>
         <input type="text" name="empresa_visitante" placeholder="Empresa">
-        <input type="datetime-local" name="fecha_visita" placeholder="Fecha de Visita" required>
         <input type="hidden" name="accion" value="crear">
+        <select name="id_emp_visita" required>
+            <option value="">Selecciona un empleado</option>
+            <?php foreach ($empleados as $empleado): ?>
+            <option value="<?= $empleado['id_emp'] ?>"><?= htmlspecialchars($empleado['nombre_emp']) . ' ' . htmlspecialchars($empleado['apellido_emp']) ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <select name="id_motivo_visita" required>
+            <option value="">Selecciona un motivo</option>
+            <option value="1">Proveedor</option>
+            <option value="2">Cliente</option>
+            <option value="3">Formación</option>
+            <option value="4">Otros</option>
+        </select>
+        <input type="datetime-local" name="fecha_visita" placeholder="Fecha de Visita" required>
+
         <button type="submit">Guardar Visitante</button>
     </form>
 
@@ -136,7 +159,7 @@ $totalPaginas = $datosPaginados['totalPaginas'];
    <h2>Buscar Visitantes</h2>
     <form method="get" action="" class="form-inline">
         <input type="text" name="busqueda" placeholder="Buscar..." value="<?= htmlspecialchars($busqueda) ?>">
-        <!-- Asegúrate de enviar también los parámetros de ordenamiento actuales al buscar -->
+        
         <input type="hidden" name="ordenarPor" value="<?= htmlspecialchars($ordenarPor) ?>">
         <input type="hidden" name="direccion" value="<?= htmlspecialchars($direccion) ?>">
         <button type="submit">Buscar</button>
@@ -146,13 +169,13 @@ $totalPaginas = $datosPaginados['totalPaginas'];
     <table>
         <thead>
             <tr>
-                <!-- Agrega los enlaces de ordenamiento a cada cabecera de columna, manteniendo los parámetros de búsqueda -->
                 <th><a href="?ordenarPor=dni_visitante&direccion=<?= $ordenarPor === 'dni_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">DNI</a></th>
                 <th><a href="?ordenarPor=nombre_visitante&direccion=<?= $ordenarPor === 'nombre_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Nombre</a></th>
                 <th><a href="?ordenarPor=apellido_visitante&direccion=<?= $ordenarPor === 'apellido_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Apellido</a></th>
                 <th><a href="?ordenarPor=email_visitante&direccion=<?= $ordenarPor === 'email_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Email</a></th>
                 <th><a href="?ordenarPor=empresa_visitante&direccion=<?= $ordenarPor === 'empresa_visitante' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Empresa</a></th>
                 <th><a href="?ordenarPor=fecha_visita&direccion=<?= $ordenarPor === 'fecha_visita' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Fecha de Visita</a></th>
+                <th><a href="?ordenarPor=nombre_emp&direccion=<?= $ordenarPor === 'nombre_emp' && $direccion !== 'DESC' ? 'DESC' : 'ASC' ?>&busqueda=<?= htmlspecialchars($busqueda) ?>">Empleado Visitado</a></th> <!-- Nueva columna -->
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -165,6 +188,7 @@ $totalPaginas = $datosPaginados['totalPaginas'];
                 <td><?= htmlspecialchars($visitante['email_visitante']) ?></td>
                 <td><?= htmlspecialchars($visitante['empresa_visitante']) ?></td>
                 <td><?= htmlspecialchars($visitante['fecha_visita']) ?></td>
+                <td><?= htmlspecialchars($visitante['nombre_emp'] . ' ' . $visitante['apellido_emp']) ?></td> <!-- Muestra el nombre del empleado -->
                 <td>
                     <form method="post" action="">
                         <input type="hidden" name="accion" value="eliminar">
