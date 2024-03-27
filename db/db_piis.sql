@@ -483,7 +483,8 @@ CREATE TABLE `visitantes` (
   `email_visitante` varchar(100) NOT NULL,
   `verificado_visitante` char(1) DEFAULT 'N',
   `empresa_visitante` varchar(100) DEFAULT 'NA',
-  `activo_visitante` char(1) DEFAULT 'S'
+  `activo_visitante` char(1) DEFAULT 'S',
+  `fecha_visita` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

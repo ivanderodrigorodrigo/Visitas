@@ -45,9 +45,9 @@ class empleadoController extends EmpleadoModel {
             $apellido_emp = $_POST['apellido_emp'];
             $email_emp = $_POST['email_emp'];    
             $rol_id = $_POST['rol_emp'];
-            $activo_emp = $_POST['activo_emp'];
 
-            $this->emp->modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id, $activo_emp);
+            $this->emp->modificar($id_emp, $dni_emp, $nombre_emp, $apellido_emp, $email_emp, $rol_id);
+
             $this->recargarDetalles($id_emp);
         }
     }
